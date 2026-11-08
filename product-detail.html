@@ -283,15 +283,15 @@
               <div class="flex flex-col gap-3">
                 <div class="p-4 rounded-2xl bg-surface-container-low">
                   <div class="flex items-center justify-between mb-1">
-                    <span class="font-bold text-xs text-on-surface">سارة وفهد الخالدي — حفل استقبال مزرعة الدرعية</span>
+                    <span class="font-bold text-xs text-on-surface">سارة ومصطفى الشناوي — حفل استقبال مزرعة الشيخ زايد</span>
                     <span class="text-[10px] text-outline">منذ أسبوعين</span>
                   </div>
                   <div class="flex text-secondary text-xs mb-1">★★★★★</div>
-                  <p class="text-xs text-on-surface-variant leading-relaxed">"استأجرنا هذه الخيمة لجلسة العروس والضيوف في المزرعة. قام فريق Gather &amp; Roam بنصبها خلال نصف ساعة مع الإضاءة والفرش. كانت نظيفة ومعقمة للغاية وشكلها راقٍ جداً في التصوير."</p>
+                  <p class="text-xs text-on-surface-variant leading-relaxed">"استأجرنا هذه الخيمة لجلسة العروس والضيوف في المزرعة بالشيخ زايد. قام فريق Gather &amp; Roam بنصبها خلال نصف ساعة مع الإضاءة والفرش. كانت نظيفة ومعقمة للغاية وشكلها راقٍ وفخم جداً في التصوير."</p>
                 </div>
                 <div class="p-4 rounded-2xl bg-surface-container-low">
                   <div class="flex items-center justify-between mb-1">
-                    <span class="font-bold text-xs text-on-surface">م. طارق العتيبي — رحلة تخييم برية في العلا</span>
+                    <span class="font-bold text-xs text-on-surface">م. طارق عبد الرحمن — رحلة تخييم برية في صحراء الفيوم</span>
                     <span class="text-[10px] text-outline">الشهر الماضي</span>
                   </div>
                   <div class="flex text-secondary text-xs mb-1">★★★★★</div>
@@ -312,15 +312,15 @@
                 <div class="grid grid-cols-3 gap-2">
                   <button data-rental-duration="day" type="button" class="p-2.5 rounded-2xl border border-outline-variant/30 text-center hover:border-primary transition-all">
                     <span class="block text-[11px] text-on-surface-variant">يوم واحد</span>
-                    <span class="font-bold text-sm text-primary font-mono">$89<span class="text-[10px] font-normal">/يوم</span></span>
+                    <span id="p-rate-day" class="font-bold text-sm text-primary font-mono">1,800 <span class="text-[10px] font-normal">ج.م/يوم</span></span>
                   </button>
                   <button data-rental-duration="weekend" type="button" class="p-2.5 rounded-2xl border-2 border-primary bg-primary-fixed/20 text-center font-bold transition-all shadow-sm">
                     <span class="block text-[11px] text-secondary font-bold">عطلة (3 أيام)</span>
-                    <span class="font-bold text-sm text-primary font-mono">$195</span>
+                    <span id="p-rate-weekend" class="font-bold text-sm text-primary font-mono">4,200 ج.م</span>
                   </button>
                   <button data-rental-duration="week" type="button" class="p-2.5 rounded-2xl border border-outline-variant/30 text-center hover:border-primary transition-all">
                     <span class="block text-[11px] text-on-surface-variant">أسبوع كامل</span>
-                    <span class="font-bold text-sm text-primary font-mono">$390</span>
+                    <span id="p-rate-week" class="font-bold text-sm text-primary font-mono">8,500 ج.م</span>
                   </button>
                 </div>
               </div>
@@ -345,17 +345,17 @@
                 <span class="text-xs uppercase tracking-wider text-on-surface-variant font-bold block mb-2">3. طريقة الاستلام والتوصيل</span>
                 <div class="grid grid-cols-2 gap-2">
                   <label class="p-2.5 rounded-2xl border border-primary bg-primary-fixed/15 flex items-center gap-2 cursor-pointer">
-                    <input type="radio" name="fulfillment" checked onchange="toggleFulfillment(35)" class="accent-primary"/>
+                    <input type="radio" name="fulfillment" checked onchange="toggleFulfillment(350)" class="accent-primary"/>
                     <div>
                       <span class="text-xs font-bold text-primary block">توصيل لموقع الفعالية</span>
-                      <span class="text-[10px] text-on-surface-variant">+$35 أسطول مبرد</span>
+                      <span class="text-[10px] text-on-surface-variant">+350 ج.م أسطول مجهز</span>
                     </div>
                   </label>
                   <label class="p-2.5 rounded-2xl border border-outline-variant/30 flex items-center gap-2 cursor-pointer hover:border-primary">
                     <input type="radio" name="fulfillment" onchange="toggleFulfillment(0)" class="accent-primary"/>
                     <div>
-                      <span class="text-xs font-bold text-on-surface block">استلام من المركز</span>
-                      <span class="text-[10px] text-on-surface-variant">مجاناً ($0)</span>
+                      <span class="text-xs font-bold text-on-surface block">استلام من المقر</span>
+                      <span class="text-[10px] text-on-surface-variant">مجاناً (0 ج.م)</span>
                     </div>
                   </label>
                 </div>
@@ -370,35 +370,35 @@
                       <input id="addon-setup" type="checkbox" checked class="accent-primary"/>
                       <span>خدمة التركيب والفك الاحترافي</span>
                     </span>
-                    <span class="text-xs font-bold text-primary font-mono">+$60.00</span>
+                    <span class="text-xs font-bold text-primary font-mono">+1,200 ج.م</span>
                   </label>
                   <label class="flex items-center justify-between p-2.5 rounded-2xl bg-surface-container-low hover:bg-surface-container cursor-pointer transition-colors">
                     <span class="flex items-center gap-2 text-xs text-on-surface font-semibold">
                       <input id="addon-mattress" type="checkbox" checked class="accent-primary"/>
-                      <span>سرير نوم ميموري فوم مع مفارش صوف</span>
+                      <span>سرير نوم ميموري فوم مع مفارش فندقية</span>
                     </span>
-                    <span class="text-xs font-bold text-primary font-mono">+$35.00</span>
+                    <span class="text-xs font-bold text-primary font-mono">+500 ج.م</span>
                   </label>
                   <label class="flex items-center justify-between p-2.5 rounded-2xl bg-surface-container-low hover:bg-surface-container cursor-pointer transition-colors">
                     <span class="flex items-center gap-2 text-xs text-on-surface font-semibold">
                       <input id="addon-lights" type="checkbox" class="accent-primary"/>
-                      <span>إضاءة بيسترو دافئة داخلية وخارجية</span>
+                      <span>إضاءة بيسترو دافئة ديكورية ساحرة</span>
                     </span>
-                    <span class="text-xs font-bold text-primary font-mono">+$15.00</span>
+                    <span class="text-xs font-bold text-primary font-mono">+300 ج.م</span>
                   </label>
                   <label class="flex items-center justify-between p-2.5 rounded-2xl bg-surface-container-low hover:bg-surface-container cursor-pointer transition-colors">
                     <span class="flex items-center gap-2 text-xs text-on-surface font-semibold">
                       <input id="addon-heater" type="checkbox" class="accent-primary"/>
                       <span>مدفأة تخييم آمنة مع أسطوانة غاز</span>
                     </span>
-                    <span class="text-xs font-bold text-primary font-mono">+$25.00</span>
+                    <span class="text-xs font-bold text-primary font-mono">+450 ج.م</span>
                   </label>
                   <label class="flex items-center justify-between p-2.5 rounded-2xl bg-surface-container-low hover:bg-surface-container cursor-pointer transition-colors">
                     <span class="flex items-center gap-2 text-xs text-on-surface font-semibold">
                       <input id="addon-waiver" type="checkbox" checked class="accent-primary"/>
                       <span>تأمين حماية شامل من الأعطال الطفيفة</span>
                     </span>
-                    <span class="text-xs font-bold text-surface-tint font-mono">+$18.00</span>
+                    <span class="text-xs font-bold text-secondary font-mono">+250 ج.م</span>
                   </label>
                 </div>
               </div>
@@ -407,23 +407,23 @@
               <div class="pt-3 border-t border-outline-variant/20 flex flex-col gap-2 text-xs">
                 <div class="flex justify-between text-on-surface-variant">
                   <span>سعر تأجير المعدة الأساسي:</span>
-                  <span id="summary-base" class="font-bold text-on-surface font-mono">$195.00</span>
+                  <span id="summary-base" class="font-bold text-on-surface font-mono">4,200 ج.م</span>
                 </div>
                 <div class="flex justify-between text-on-surface-variant">
                   <span>رسوم التوصيل واللوجستيات:</span>
-                  <span id="summary-shipping" class="font-bold text-on-surface font-mono">$35.00</span>
+                  <span id="summary-shipping" class="font-bold text-on-surface font-mono">350 ج.م</span>
                 </div>
                 <div class="flex justify-between text-on-surface-variant">
                   <span>الخدمات والإضافات المختارة:</span>
-                  <span id="summary-addons" class="font-bold text-on-surface font-mono">$95.00</span>
+                  <span id="summary-addons" class="font-bold text-on-surface font-mono">1,700 ج.م</span>
                 </div>
                 <div class="flex justify-between text-on-surface-variant">
                   <span>وثيقة الحماية الشاملة:</span>
-                  <span id="summary-waiver" class="font-bold text-on-surface font-mono">$18.00</span>
+                  <span id="summary-waiver" class="font-bold text-on-surface font-mono">250 ج.م</span>
                 </div>
                 <div class="flex justify-between text-secondary">
                   <span>خصم كود الترحيب (FIRSTEVENT):</span>
-                  <span class="font-bold font-mono">-$20.00</span>
+                  <span class="font-bold font-mono">-500 ج.م</span>
                 </div>
 
                 <!-- Total -->
@@ -432,7 +432,7 @@
                     <span class="font-headline-sm text-lg font-bold text-primary">المجموع النهائي للحجز</span>
                     <p class="text-[11px] text-outline">حجز وتثبيت التواريخ مؤكد</p>
                   </div>
-                  <span id="summary-total" class="font-price-tag text-2xl font-bold text-primary">$323.00</span>
+                  <span id="summary-total" class="font-price-tag text-2xl font-bold text-primary">6,000 ج.م</span>
                 </div>
               </div>
 

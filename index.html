@@ -195,7 +195,7 @@
                 <label class="text-[11px] uppercase tracking-wider text-on-surface-variant font-bold flex items-center gap-1">
                   <span class="material-symbols-outlined text-[16px] text-secondary">pin_drop</span> الوجهة / المدينة
                 </label>
-                <input name="location" class="w-full bg-transparent font-bold text-sm text-on-surface focus:outline-none placeholder:text-outline/70 mt-0.5" placeholder="مثال: الرياض، جدة، العلا" type="text" value="الرياض / منطقة الفعاليات"/>
+                <input name="location" class="w-full bg-transparent font-bold text-sm text-on-surface focus:outline-none placeholder:text-outline/70 mt-0.5" placeholder="مثال: الشيخ زايد، التجمع، الساحل الشمالي، الفيوم" type="text" value="الشيخ زايد / القاهرة والجيزة"/>
               </div>
 
               <!-- Start Date -->
@@ -270,133 +270,157 @@
         <!-- 8 Categories Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="category-grid">
           <!-- 1: Tents -->
-          <a class="category-card group rounded-2xl p-5 bg-surface-container-lowest hover:bg-surface-container-low transition-all duration-300 shadow-sm hover:shadow-md flex flex-col justify-between border border-outline-variant/20" data-type="party" href="catalog.html?cat=tents">
+          <a class="category-card luxury-card group p-5 flex flex-col justify-between" data-type="party" href="catalog.html?cat=tents">
             <div>
               <div class="w-full h-40 rounded-xl overflow-hidden mb-4 relative bg-surface-container">
                 <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyFznyW4rsKqLfUjSNOuo3SOn2KU0RlcT3EG7wLRtZeKLiMJ5-6UNb8H1pk-rfA9E-1_Vmx7dEytHlCmj2A3q_yBJDlGgAYwCI4O9o124HzWWXtcVPEib9uFe_VTb6eFslxVipx9C89ojE9mxpr-dISHu8oXTCMT5BuFa1ty04qwEl9qWM0F_oGxWZj_c14eFP5qU9xbXtp_zWos3hHgb9bGmTPiiw7XMpvdPqzeue" alt="خيام ومظلات الفعاليات"/>
-                <span class="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full bg-primary-container text-on-primary text-[10px] font-bold">الأكثر طلباً</span>
+                <span class="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full badge-shimmer text-[10px] font-bold">الأكثر طلباً</span>
               </div>
               <h3 class="font-headline-sm text-lg font-bold text-primary group-hover:text-secondary transition-colors mb-1">خيام ماركي ومظلات عملاقة</h3>
               <p class="text-xs text-on-surface-variant line-clamp-2">أجنحة ضيافة ملكية، قباب جيوديسية، ومظلات شمسية مع مراسي تثبيت فولاذية للعواصف.</p>
             </div>
             <div class="mt-4 pt-3 flex items-center justify-between border-t border-outline-variant/15">
               <div>
-                <span class="text-[11px] text-on-surface-variant block">يبدأ من</span>
-                <span class="font-price-tag text-lg font-bold text-primary">$120<span class="text-xs font-normal text-on-surface-variant"> / يوم</span></span>
+                <span class="text-[11px] text-on-surface-variant block mb-0.5">يبدأ من</span>
+                <div class="price-egp-container">
+                  <span class="price-egp-amount text-lg font-bold text-primary">1,800</span>
+                  <span class="price-egp-currency">ج.م</span>
+                  <span class="text-xs font-normal text-on-surface-variant">/ يوم</span>
+                </div>
               </div>
-              <span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-all">
+              <span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-all shadow-sm">
                 <span class="material-symbols-outlined text-[16px] rotate-180">arrow_forward</span>
               </span>
             </div>
           </a>
 
           <!-- 2: Audio -->
-          <a class="category-card group rounded-2xl p-5 bg-surface-container-lowest hover:bg-surface-container-low transition-all duration-300 shadow-sm hover:shadow-md flex flex-col justify-between border border-outline-variant/20" data-type="party" href="catalog.html?cat=sound">
+          <a class="category-card luxury-card group p-5 flex flex-col justify-between" data-type="party" href="catalog.html?cat=sound">
             <div>
               <div class="w-full h-40 rounded-xl overflow-hidden mb-4 relative bg-surface-container">
                 <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9r90Va6cshbvnA_tVWqc_k-XIq5SlUHDaHvVn8FNtSaDPSnRPcuzeDOZwuQPu4KrdQS7F0yUtLkmZ9VrkLpYDAHaXylrrioXjfW3k2RAmBumry7R_lO-NiqWth0QRpsj51EpwK1eZmALBrNLMfArKVLZ3wj8ux0RqedvzSBoLreDxDLIroFsjEcKC97_hE5MSEsK_QHnrCtRzmgxbxTfm6glE2pQ7I8ZB5QiSZiQD" alt="أنظمة الصوت والمايكات"/>
-                <span class="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm text-tertiary text-[10px] font-bold">جاهز للتشغيل</span>
+                <span class="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm text-secondary text-[10px] font-bold">جاهز للتشغيل</span>
               </div>
               <h3 class="font-headline-sm text-lg font-bold text-primary group-hover:text-secondary transition-colors mb-1">أنظمة صوت ومايكات لاسلكية</h3>
-              <p class="text-xs text-on-surface-variant line-clamp-2">سماعات عمودية قوية تعمل بالبطارية، مايكات UHF، ومكسرات صوتية تتصل بالبلوتوث.</p>
+              <p class="text-xs text-on-surface-variant line-clamp-2">سماعات عمودية مسرحية بقوة 1000W تعمل بالبطارية، مايكات UHF، ومكسرات بلوتوث نقية.</p>
             </div>
             <div class="mt-4 pt-3 flex items-center justify-between border-t border-outline-variant/15">
               <div>
-                <span class="text-[11px] text-on-surface-variant block">يبدأ من</span>
-                <span class="font-price-tag text-lg font-bold text-primary">$65<span class="text-xs font-normal text-on-surface-variant"> / يوم</span></span>
+                <span class="text-[11px] text-on-surface-variant block mb-0.5">يبدأ من</span>
+                <div class="price-egp-container">
+                  <span class="price-egp-amount text-lg font-bold text-primary">1,400</span>
+                  <span class="price-egp-currency">ج.م</span>
+                  <span class="text-xs font-normal text-on-surface-variant">/ يوم</span>
+                </div>
               </div>
-              <span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-all">
+              <span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-all shadow-sm">
                 <span class="material-symbols-outlined text-[16px] rotate-180">arrow_forward</span>
               </span>
             </div>
           </a>
 
           <!-- 3: Lighting -->
-          <a class="category-card group rounded-2xl p-5 bg-surface-container-lowest hover:bg-surface-container-low transition-all duration-300 shadow-sm hover:shadow-md flex flex-col justify-between border border-outline-variant/20" data-type="party" href="catalog.html?cat=lighting">
+          <a class="category-card luxury-card group p-5 flex flex-col justify-between" data-type="party" href="catalog.html?cat=lighting">
             <div>
               <div class="w-full h-40 rounded-xl overflow-hidden mb-4 relative bg-surface-container">
                 <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeAS_zXZ5XbRsGxI83WSK25qSuCmVM5ZCBNddXgjmazdT8ZhKjgpobNiXhGy9DtK8F1YSgly91HTpFyAzDa04Ohqd_SR_60xKU17sw6Zia5yv2okDVqqiftP-6itaNNWT_HJ5bq2Aeyh3pe1NhtAqYKb7mKlY1-6G3g10wHVb3ra44Z5rICT0uffxt4c1iaMQEs8JmvX2Ca1M5DR73rizwTfc4zMhTeXbXvmEHeRjq" alt="إضاءة ديكورية"/>
-                <span class="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed text-[10px] font-bold">أجواء ساحرة</span>
+                <span class="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full badge-shimmer text-[10px] font-bold">أجواء سينمائية</span>
               </div>
               <h3 class="font-headline-sm text-lg font-bold text-primary group-hover:text-secondary transition-colors mb-1">إضاءة إديسون ومصابيح شمسية</h3>
-              <p class="text-xs text-on-surface-variant line-clamp-2">حبال إضاءة دافئة تجارية، كشافات أرضية، فوانيس تراثية، ومتحكمات شدة الإضاءة.</p>
+              <p class="text-xs text-on-surface-variant line-clamp-2">حبال إضاءة دافئة تجارية 90 متراً، كشافات دافئة، فوانيس تراثية، ومتحكمات شدة الإضاءة.</p>
             </div>
             <div class="mt-4 pt-3 flex items-center justify-between border-t border-outline-variant/15">
               <div>
-                <span class="text-[11px] text-on-surface-variant block">يبدأ من</span>
-                <span class="font-price-tag text-lg font-bold text-primary">$35<span class="text-xs font-normal text-on-surface-variant"> / يوم</span></span>
+                <span class="text-[11px] text-on-surface-variant block mb-0.5">يبدأ من</span>
+                <div class="price-egp-container">
+                  <span class="price-egp-amount text-lg font-bold text-primary">750</span>
+                  <span class="price-egp-currency">ج.م</span>
+                  <span class="text-xs font-normal text-on-surface-variant">/ يوم</span>
+                </div>
               </div>
-              <span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-all">
+              <span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-all shadow-sm">
                 <span class="material-symbols-outlined text-[16px] rotate-180">arrow_forward</span>
               </span>
             </div>
           </a>
 
           <!-- 4: Catering -->
-          <a class="category-card group rounded-2xl p-5 bg-surface-container-lowest hover:bg-surface-container-low transition-all duration-300 shadow-sm hover:shadow-md flex flex-col justify-between border border-outline-variant/20" data-type="party" href="catalog.html?cat=catering">
+          <a class="category-card luxury-card group p-5 flex flex-col justify-between" data-type="party" href="catalog.html?cat=catering">
             <div>
               <div class="w-full h-40 rounded-xl overflow-hidden mb-4 relative bg-surface-container">
                 <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzIz-bxDO_st7Hj4-b_l45zMd8FOrOlhQcS0XKd9DWuuTRV5h-4t-siEcGemxifwPt7q_G3NPcwfzimm3mObW4tOlO8ZoKfxzG1eaK2WC-3eBieFSdEo55yUPqOQpum2tl7xiXQUA_op9rIK2Rpre2pIzd1QjXvG2kj0d-oOEEjkFCzhNbIzuU1fUJ_6RGyxkXUju1V7ZYJggvSMvSLmNQN4ZLrTh13xGQgzlD8D3c" alt="الضيافة والبوفيه"/>
-                <span class="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm text-primary text-[10px] font-bold">معقم مخبرياً</span>
+                <span class="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm text-primary text-[10px] font-bold">معقم فندقياً</span>
               </div>
               <h3 class="font-headline-sm text-lg font-bold text-primary group-hover:text-secondary transition-colors mb-1">مستلزمات الضيافة والبوفيه</h3>
-              <p class="text-xs text-on-surface-variant line-clamp-2">أطقم صحون سيراميك يدوية، سخانات بوفيه، أواني تقديم نحاسية، وحافظات مشروبات.</p>
+              <p class="text-xs text-on-surface-variant line-clamp-2">أطقم صحون سيراميك يدوية، سخانات بوفيه ذهبية، كؤوس كريستال، وحافظات مشروبات.</p>
             </div>
             <div class="mt-4 pt-3 flex items-center justify-between border-t border-outline-variant/15">
               <div>
-                <span class="text-[11px] text-on-surface-variant block">يبدأ من</span>
-                <span class="font-price-tag text-lg font-bold text-primary">$45<span class="text-xs font-normal text-on-surface-variant"> / يوم</span></span>
+                <span class="text-[11px] text-on-surface-variant block mb-0.5">يبدأ من</span>
+                <div class="price-egp-container">
+                  <span class="price-egp-amount text-lg font-bold text-primary">650</span>
+                  <span class="price-egp-currency">ج.م</span>
+                  <span class="text-xs font-normal text-on-surface-variant">/ يوم</span>
+                </div>
               </div>
-              <span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-all">
+              <span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-all shadow-sm">
                 <span class="material-symbols-outlined text-[16px] rotate-180">arrow_forward</span>
               </span>
             </div>
           </a>
 
           <!-- 5: Seating -->
-          <a class="category-card group rounded-2xl p-5 bg-surface-container-lowest hover:bg-surface-container-low transition-all duration-300 shadow-sm hover:shadow-md flex flex-col justify-between border border-outline-variant/20" data-type="party" href="catalog.html?cat=seating">
+          <a class="category-card luxury-card group p-5 flex flex-col justify-between" data-type="party" href="catalog.html?cat=seating">
             <div>
               <div class="w-full h-40 rounded-xl overflow-hidden mb-4 relative bg-surface-container">
                 <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCatUBtpwRYJ8I8Ngt0FjBTuLaBsYBsBh0ZD5wlK2VDIjciGCNZcxhxiPai8MibxjV-J8HG0dxafKjzhvjeXFOPBXx9uROPGkWDaLrYcIDctT1weqO2MXKe_iDItc4YiqyZFl7hfZYkFSGS5It-1IGNqqS8QGWIY89sZReaY5G3y7H_erDDWrQ35IO9sFl6wLgTiB4Y0J90hXeqwRZRyndTh9AFsdOeSjmvc1LjB4z2" alt="جلسات ومواقد نار"/>
-                <span class="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed text-[10px] font-bold">نار بلا دخان</span>
+                <span class="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full badge-emerald text-[10px] font-bold">خشب طبيعي</span>
               </div>
-              <h3 class="font-headline-sm text-lg font-bold text-primary group-hover:text-secondary transition-colors mb-1">جلسات خارجية ومواقد نار</h3>
-              <p class="text-xs text-on-surface-variant line-clamp-2">كنبات موديلار منخفضة، مواقد سولو ستوف النقية، وسائد أرضية وبطانيات صوف دافئة.</p>
+              <h3 class="font-headline-sm text-lg font-bold text-primary group-hover:text-secondary transition-colors mb-1">جلسات صنوبر ريفية ومواقد</h3>
+              <p class="text-xs text-on-surface-variant line-clamp-2">طاولات مأدبة خشب صلب، مواقد سولو ستوف النقية بلا دخان، وسائد أرضية وبطانيات صوف.</p>
             </div>
             <div class="mt-4 pt-3 flex items-center justify-between border-t border-outline-variant/15">
               <div>
-                <span class="text-[11px] text-on-surface-variant block">يبدأ من</span>
-                <span class="font-price-tag text-lg font-bold text-primary">$80<span class="text-xs font-normal text-on-surface-variant"> / يوم</span></span>
+                <span class="text-[11px] text-on-surface-variant block mb-0.5">يبدأ من</span>
+                <div class="price-egp-container">
+                  <span class="price-egp-amount text-lg font-bold text-primary">950</span>
+                  <span class="price-egp-currency">ج.م</span>
+                  <span class="text-xs font-normal text-on-surface-variant">/ يوم</span>
+                </div>
               </div>
-              <span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-all">
+              <span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-all shadow-sm">
                 <span class="material-symbols-outlined text-[16px] rotate-180">arrow_forward</span>
               </span>
             </div>
           </a>
 
           <!-- 6: Expedition Tents -->
-          <a class="category-card group rounded-2xl p-5 bg-surface-container-lowest hover:bg-surface-container-low transition-all duration-300 shadow-sm hover:shadow-md flex flex-col justify-between border border-outline-variant/20" data-type="trip" href="catalog.html?cat=tents">
+          <a class="category-card luxury-card group p-5 flex flex-col justify-between" data-type="trip" href="catalog.html?cat=tents">
             <div>
               <div class="w-full h-40 rounded-xl overflow-hidden mb-4 relative bg-surface-container">
                 <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlUTpCWRljBv0XWJTHV-jj9VjtR6sTSS6gVLqoKM0gnlrBM-B9kWYHagFletWml5w2WNzqCxQdJ4a4wSSYUW_S53jGJQY0E6sv-2OxU4x3vXkL5ASCgkicrWkdwVxNaUfUMSQEJu_gCBAwk6NPcPIUuKCT_EFjVqENZa79ECnralBw2sKrQ3UTOgV4xdynWuKd6PseGE7wTlTb7N9jcz6s32rjgRafz4VFE5hMaq6a" alt="خيام الرحلات"/>
-                <span class="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed text-[10px] font-bold">تحمل 4 فصول</span>
+                <span class="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full badge-emerald text-[10px] font-bold">تحمل 4 فصول</span>
               </div>
               <h3 class="font-headline-sm text-lg font-bold text-primary group-hover:text-secondary transition-colors mb-1">خيام استكشافية ومعدات نوم</h3>
               <p class="text-xs text-on-surface-variant line-clamp-2">خيام كانفاس جبلية مقاومة للبرد، مراتب نوم هوائية ميموري فوم، وأكياس نوم معزولة.</p>
             </div>
             <div class="mt-4 pt-3 flex items-center justify-between border-t border-outline-variant/15">
               <div>
-                <span class="text-[11px] text-on-surface-variant block">يبدأ من</span>
-                <span class="font-price-tag text-lg font-bold text-primary">$40<span class="text-xs font-normal text-on-surface-variant"> / يوم</span></span>
+                <span class="text-[11px] text-on-surface-variant block mb-0.5">يبدأ من</span>
+                <div class="price-egp-container">
+                  <span class="price-egp-amount text-lg font-bold text-primary">1,200</span>
+                  <span class="price-egp-currency">ج.م</span>
+                  <span class="text-xs font-normal text-on-surface-variant">/ يوم</span>
+                </div>
               </div>
-              <span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-all">
+              <span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-all shadow-sm">
                 <span class="material-symbols-outlined text-[16px] rotate-180">arrow_forward</span>
               </span>
             </div>
           </a>
 
           <!-- 7: Camp Kitchen -->
-          <a class="category-card group rounded-2xl p-5 bg-surface-container-lowest hover:bg-surface-container-low transition-all duration-300 shadow-sm hover:shadow-md flex flex-col justify-between border border-outline-variant/20" data-type="trip" href="catalog.html?cat=kitchen">
+          <a class="category-card luxury-card group p-5 flex flex-col justify-between" data-type="trip" href="catalog.html?cat=kitchen">
             <div>
               <div class="w-full h-40 rounded-xl overflow-hidden mb-4 relative bg-surface-container">
                 <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBr_DGkiGjl6C7bfhumc6za7sV1G2GvAVySrksXY0eJv9t-q6QsplSKoa5rj6aA_4Fgbqhh1yidwd36QOWU7TIoJ1iFZzl2DqV6U13nooFBAcT2CIAR4vcXB1yp4bJbnLnAx6tHeXTz0JOEnzIo9jAL9RObHZuq_q7eEMxeNgdWPs8lKTZLvrkBGrD9WSiTKV5EIrweDsEqavbyDYRd0iJiGkKa-1TAkwQghxMKfS2" alt="مطابخ التخييم"/>
@@ -407,31 +431,39 @@
             </div>
             <div class="mt-4 pt-3 flex items-center justify-between border-t border-outline-variant/15">
               <div>
-                <span class="text-[11px] text-on-surface-variant block">يبدأ من</span>
-                <span class="font-price-tag text-lg font-bold text-primary">$30<span class="text-xs font-normal text-on-surface-variant"> / يوم</span></span>
+                <span class="text-[11px] text-on-surface-variant block mb-0.5">يبدأ من</span>
+                <div class="price-egp-container">
+                  <span class="price-egp-amount text-lg font-bold text-primary">600</span>
+                  <span class="price-egp-currency">ج.م</span>
+                  <span class="text-xs font-normal text-on-surface-variant">/ يوم</span>
+                </div>
               </div>
-              <span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-all">
+              <span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-all shadow-sm">
                 <span class="material-symbols-outlined text-[16px] rotate-180">arrow_forward</span>
               </span>
             </div>
           </a>
 
           <!-- 8: Power & Solar -->
-          <a class="category-card group rounded-2xl p-5 bg-surface-container-lowest hover:bg-surface-container-low transition-all duration-300 shadow-sm hover:shadow-md flex flex-col justify-between border border-outline-variant/20" data-type="trip" href="catalog.html?cat=power">
+          <a class="category-card luxury-card group p-5 flex flex-col justify-between" data-type="trip" href="catalog.html?cat=power">
             <div>
               <div class="w-full h-40 rounded-xl overflow-hidden mb-4 relative bg-surface-container">
                 <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5T_kq9W_27DjJoDun6tsF_cwPkcE_KlSU-grGXhF9kXQjYuiWt6kWwM3SGSQ4LxZUQDCpi02PKedMkZEraTMfEF-rKyVKRT_dMemXbMXVbhzbqdJhnxhiGk3bBgzEoPoRR0kadqcfGQVOJjTSuCVhqLTGN2961w96URpJ-1DqcKKPdltZaJg6QOqeTsaILqAClcoc6c3h6kWopCHRoMLuDrWpxxn30GKk10JS5rJG" alt="محطات طاقة"/>
-                <span class="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full bg-surface-tint text-on-primary text-[10px] font-bold">بدون انبعاثات</span>
+                <span class="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full badge-emerald text-[10px] font-bold">صامتة 100%</span>
               </div>
               <h3 class="font-headline-sm text-lg font-bold text-primary group-hover:text-secondary transition-colors mb-1">محطات طاقة وألواح شمسية</h3>
               <p class="text-xs text-on-surface-variant line-clamp-2">مولدات ليثيوم 2000W صامتة تماماً، ألواح طاقة شمسية قابلة للطي، ولوحات توزيع طاقة آمنة.</p>
             </div>
             <div class="mt-4 pt-3 flex items-center justify-between border-t border-outline-variant/15">
               <div>
-                <span class="text-[11px] text-on-surface-variant block">يبدأ من</span>
-                <span class="font-price-tag text-lg font-bold text-primary">$55<span class="text-xs font-normal text-on-surface-variant"> / يوم</span></span>
+                <span class="text-[11px] text-on-surface-variant block mb-0.5">يبدأ من</span>
+                <div class="price-egp-container">
+                  <span class="price-egp-amount text-lg font-bold text-primary">1,100</span>
+                  <span class="price-egp-currency">ج.م</span>
+                  <span class="text-xs font-normal text-on-surface-variant">/ يوم</span>
+                </div>
               </div>
-              <span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-all">
+              <span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-all shadow-sm">
                 <span class="material-symbols-outlined text-[16px] rotate-180">arrow_forward</span>
               </span>
             </div>
@@ -458,9 +490,10 @@
 
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <!-- Bundle 1 -->
-            <div class="rounded-3xl bg-surface-container-lowest p-6 shadow-md flex flex-col justify-between relative overflow-hidden group hover:shadow-xl transition-all border border-outline-variant/20">
-              <div class="absolute top-0 left-0 bg-secondary text-white px-4 py-1.5 rounded-br-2xl text-xs uppercase tracking-wider font-bold">
-                وفر 20% مع الباقة
+            <div class="rounded-3xl bg-surface-container-lowest p-6 shadow-md flex flex-col justify-between relative overflow-hidden group hover:shadow-xl transition-all border border-outline-variant/20 luxury-card">
+              <div class="absolute top-0 left-0 vip-ribbon rounded-br-2xl">
+                <span class="material-symbols-outlined text-[14px]">star</span>
+                وفر 20% مع الباقة الملكية
               </div>
               <div>
                 <div class="w-full h-56 rounded-2xl overflow-hidden mb-6 relative">
@@ -468,7 +501,7 @@
                   <span class="absolute bottom-3 right-3 px-3 py-1 rounded-full bg-surface/90 backdrop-blur-md text-xs text-primary font-bold">تتسع لـ 40 ضيفاً</span>
                 </div>
                 <h3 class="font-headline-md text-xl font-bold text-primary mb-2">باقة خيمة الزفاف الغابية الملكية</h3>
-                <p class="text-xs text-on-surface-variant mb-6">باقة تجهيز متكاملة تحول المواقع الخارجية المفتوحة إلى صالة مأدبة ملكية ساحرة.</p>
+                <p class="text-xs text-on-surface-variant mb-6">باقة تجهيز متكاملة تحول المواقع الخارجية ومزارع الشيخ زايد والتجمع إلى صالة مأدبة ملكية ساحرة.</p>
                 <div class="p-4 rounded-2xl bg-surface-container-low mb-6">
                   <span class="text-[11px] uppercase tracking-wider text-on-surface-variant font-bold block mb-3">محتويات هذه الباقة:</span>
                   <ul class="space-y-2 text-xs text-on-surface font-semibold">
@@ -482,13 +515,14 @@
               </div>
               <div class="pt-4 flex flex-col gap-3 border-t border-outline-variant/15">
                 <div class="flex items-baseline justify-between">
-                  <div>
-                    <span class="line-through text-outline text-sm ml-1.5">$1,812</span>
-                    <span class="font-price-tag text-2xl font-bold text-primary">$1,450</span>
+                  <div class="price-egp-container">
+                    <span class="line-through text-outline text-sm ml-1.5 font-mono">38,000 ج.م</span>
+                    <span class="price-egp-amount text-2xl font-bold text-primary">29,500</span>
+                    <span class="price-egp-currency">ج.م</span>
                   </div>
-                  <span class="text-xs text-on-surface-variant">باقة عطلة نهاية الأسبوع (3 أيام)</span>
+                  <span class="text-xs text-on-surface-variant font-medium">عطلة نهاية الأسبوع (3 أيام)</span>
                 </div>
-                <button class="w-full py-3.5 rounded-2xl bg-primary hover:bg-primary-container text-white font-bold text-sm text-center transition-colors shadow-sm flex items-center justify-center gap-2" onclick="quickReserve('باقة خيمة الزفاف الغابية', '$1,450')" type="button">
+                <button class="w-full py-3.5 rounded-2xl btn-luxury text-white font-bold text-sm text-center transition-all shadow-md flex items-center justify-center gap-2" onclick="quickReserve('باقة خيمة الزفاف الغابية الملكية', '29500')" type="button">
                   <span class="material-symbols-outlined text-[18px]">shopping_bag</span>
                   <span>احجز باقة الزفاف الآن</span>
                 </button>
@@ -496,9 +530,9 @@
             </div>
 
             <!-- Bundle 2 -->
-            <div class="rounded-3xl bg-surface-container-lowest p-6 shadow-md flex flex-col justify-between relative overflow-hidden group hover:shadow-xl transition-all border border-outline-variant/20">
+            <div class="rounded-3xl bg-surface-container-lowest p-6 shadow-md flex flex-col justify-between relative overflow-hidden group hover:shadow-xl transition-all border border-outline-variant/20 luxury-card">
               <div class="absolute top-0 left-0 bg-primary text-white px-4 py-1.5 rounded-br-2xl text-xs uppercase tracking-wider font-bold">
-                جاهز للمغامرات
+                جاهز للمغامرات البرية
               </div>
               <div>
                 <div class="w-full h-56 rounded-2xl overflow-hidden mb-6 relative">
@@ -506,7 +540,7 @@
                   <span class="absolute bottom-3 right-3 px-3 py-1 rounded-full bg-surface/90 backdrop-blur-md text-xs text-primary font-bold">8 مغامرين</span>
                 </div>
                 <h3 class="font-headline-md text-xl font-bold text-primary mb-2">باقة المعسكر الاستكشافي للرحلات البرية</h3>
-                <p class="text-xs text-on-surface-variant mb-6">مصممة لرحلات الرمال، التخييم الجبلي، ومخيمات تأمل النجوم مع أعلى معايير الرفاهية.</p>
+                <p class="text-xs text-on-surface-variant mb-6">مصممة لرحلات صحراء الفيوم، الساحل الشمالي، وجبال دهب وسانت كاترين مع أعلى معايير الرفاهية.</p>
                 <div class="p-4 rounded-2xl bg-surface-container-low mb-6">
                   <span class="text-[11px] uppercase tracking-wider text-on-surface-variant font-bold block mb-3">محتويات هذه الباقة:</span>
                   <ul class="space-y-2 text-xs text-on-surface font-semibold">
@@ -520,13 +554,14 @@
               </div>
               <div class="pt-4 flex flex-col gap-3 border-t border-outline-variant/15">
                 <div class="flex items-baseline justify-between">
-                  <div>
-                    <span class="line-through text-outline text-sm ml-1.5">$940</span>
-                    <span class="font-price-tag text-2xl font-bold text-primary">$780</span>
+                  <div class="price-egp-container">
+                    <span class="line-through text-outline text-sm ml-1.5 font-mono">22,000 ج.م</span>
+                    <span class="price-egp-amount text-2xl font-bold text-primary">16,800</span>
+                    <span class="price-egp-currency">ج.م</span>
                   </div>
-                  <span class="text-xs text-on-surface-variant">إيجار مغامرة برية (4 أيام)</span>
+                  <span class="text-xs text-on-surface-variant font-medium">إيجار مغامرة برية (4 أيام)</span>
                 </div>
-                <button class="w-full py-3.5 rounded-2xl bg-primary hover:bg-primary-container text-white font-bold text-sm text-center transition-colors shadow-sm flex items-center justify-center gap-2" onclick="quickReserve('باقة المعسكر الاستكشافي', '$780')" type="button">
+                <button class="w-full py-3.5 rounded-2xl btn-luxury text-white font-bold text-sm text-center transition-all shadow-md flex items-center justify-center gap-2" onclick="quickReserve('باقة المعسكر الاستكشافي للرحلات البرية', '16800')" type="button">
                   <span class="material-symbols-outlined text-[18px]">shopping_bag</span>
                   <span>احجز باقة المغامرة الآن</span>
                 </button>
@@ -534,9 +569,9 @@
             </div>
 
             <!-- Bundle 3 -->
-            <div class="rounded-3xl bg-surface-container-lowest p-6 shadow-md flex flex-col justify-between relative overflow-hidden group hover:shadow-xl transition-all border border-outline-variant/20">
-              <div class="absolute top-0 left-0 bg-surface-tint text-white px-4 py-1.5 rounded-br-2xl text-xs uppercase tracking-wider font-bold">
-                المفضلة لسهرات العطلة
+            <div class="rounded-3xl bg-surface-container-lowest p-6 shadow-md flex flex-col justify-between relative overflow-hidden group hover:shadow-xl transition-all border border-outline-variant/20 luxury-card">
+              <div class="absolute top-0 left-0 badge-shimmer px-4 py-1.5 rounded-br-2xl text-xs uppercase tracking-wider font-bold">
+                الأكثر طلباً للسهرات
               </div>
               <div>
                 <div class="w-full h-56 rounded-2xl overflow-hidden mb-6 relative">
@@ -544,7 +579,7 @@
                   <span class="absolute bottom-3 right-3 px-3 py-1 rounded-full bg-surface/90 backdrop-blur-md text-xs text-primary font-bold">25-50 ضيفاً</span>
                 </div>
                 <h3 class="font-headline-md text-xl font-bold text-primary mb-2">باقة السينما المفتوحة وجلسات النجوم</h3>
-                <p class="text-xs text-on-surface-variant mb-6">أقم أمسية سينمائية استثنائية في حديقة منزلك أو استراحتك مع شاشة عملاقة وصوت محيطي.</p>
+                <p class="text-xs text-on-surface-variant mb-6">أقم سهرة سينمائية خيالية في حديقة فيلتك أو مزرعتك مع شاشة عملاقة وصوت مسرحي محيطي.</p>
                 <div class="p-4 rounded-2xl bg-surface-container-low mb-6">
                   <span class="text-[11px] uppercase tracking-wider text-on-surface-variant font-bold block mb-3">محتويات هذه الباقة:</span>
                   <ul class="space-y-2 text-xs text-on-surface font-semibold">
@@ -558,13 +593,14 @@
               </div>
               <div class="pt-4 flex flex-col gap-3 border-t border-outline-variant/15">
                 <div class="flex items-baseline justify-between">
-                  <div>
-                    <span class="line-through text-outline text-sm ml-1.5">$620</span>
-                    <span class="font-price-tag text-2xl font-bold text-primary">$495</span>
+                  <div class="price-egp-container">
+                    <span class="line-through text-outline text-sm ml-1.5 font-mono">14,500 ج.م</span>
+                    <span class="price-egp-amount text-2xl font-bold text-primary">10,900</span>
+                    <span class="price-egp-currency">ج.م</span>
                   </div>
-                  <span class="text-xs text-on-surface-variant">عرض ليلتين متتاليتين</span>
+                  <span class="text-xs text-on-surface-variant font-medium">عرض ليلتين متتاليتين</span>
                 </div>
-                <button class="w-full py-3.5 rounded-2xl bg-primary hover:bg-primary-container text-white font-bold text-sm text-center transition-colors shadow-sm flex items-center justify-center gap-2" onclick="quickReserve('باقة السينما المفتوحة', '$495')" type="button">
+                <button class="w-full py-3.5 rounded-2xl btn-gold text-white font-bold text-sm text-center transition-all shadow-md flex items-center justify-center gap-2" onclick="quickReserve('باقة السينما المفتوحة وجلسات تحت النجوم', '10900')" type="button">
                   <span class="material-symbols-outlined text-[18px]">shopping_bag</span>
                   <span>احجز باقة السينما الآن</span>
                 </button>

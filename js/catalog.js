@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentView = "grid";
   let activeCategory = "all";
   let activeDurationMode = "weekend"; // day, weekend, week
-  let maxPrice = 300;
+  let maxPrice = 12000;
   let activeAvailability = "all";
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (priceSlider) {
     priceSlider.addEventListener("input", (e) => {
       maxPrice = Number(e.target.value);
-      if (priceValueDisplay) priceValueDisplay.textContent = `$${maxPrice}`;
+      if (priceValueDisplay) priceValueDisplay.textContent = `${maxPrice.toLocaleString('ar-EG')} ج.م`;
       renderProducts();
     });
   }
@@ -232,12 +232,13 @@ document.addEventListener("DOMContentLoaded", () => {
               </div>
               <div class="pt-3 flex items-end justify-between border-t border-outline-variant/15 mt-1">
                 <div>
-                  <span class="text-[11px] text-on-surface-variant block">سعر الإيجار اليومي</span>
-                  <div class="flex items-baseline gap-1">
-                    <span class="font-price-tag text-xl font-bold text-primary">$${p.dailyRate}</span>
+                  <span class="text-[11px] text-on-surface-variant block mb-0.5">سعر الإيجار</span>
+                  <div class="flex items-baseline gap-1.5">
+                    <span class="font-price-tag text-xl font-bold text-primary">${p.dailyRate.toLocaleString('ar-EG')}</span>
+                    <span class="price-egp-currency">ج.م</span>
                     <span class="text-xs text-on-surface-variant">/ يوم</span>
                   </div>
-                  <span class="text-[11px] text-secondary font-bold block">$${p.weekendRate} / باقة عطلة الأسبوع</span>
+                  <span class="text-[11px] text-secondary font-bold block mt-0.5">${p.weekendRate.toLocaleString('ar-EG')} ج.م / باقة نهاية الأسبوع</span>
                 </div>
                 <a href="product-detail.html?id=${p.id}" class="px-4 py-2.5 rounded-xl bg-primary text-white text-xs font-bold hover:bg-primary-container transition-all shadow-sm">
                   تخصيص وتأجير
@@ -281,10 +282,11 @@ document.addEventListener("DOMContentLoaded", () => {
               </div>
             </div>
             <div class="flex items-center justify-between pt-3 border-t border-outline-variant/15">
-              <div>
-                <span class="font-price-tag text-xl font-bold text-primary">$${p.dailyRate}</span>
+              <div class="flex items-baseline gap-2">
+                <span class="font-price-tag text-xl font-bold text-primary">${p.dailyRate.toLocaleString('ar-EG')}</span>
+                <span class="price-egp-currency">ج.م</span>
                 <span class="text-xs text-on-surface-variant">/ يوم</span>
-                <span class="text-secondary font-bold text-xs mr-2">($${p.weekendRate} / باقة عطلة الأسبوع)</span>
+                <span class="text-secondary font-bold text-xs mr-2">(${p.weekendRate.toLocaleString('ar-EG')} ج.م / عطلة الأسبوع)</span>
               </div>
               <div class="flex items-center gap-2">
                 <button type="button" onclick="GatherApp.addToCart(window.GATHER_PRODUCTS.find(x => x.id === '${p.id}'))" class="px-3.5 py-2 rounded-xl bg-surface-container hover:bg-surface-container-high text-primary font-bold text-xs">
@@ -304,9 +306,9 @@ document.addEventListener("DOMContentLoaded", () => {
   window.resetCatalogFilters = () => {
     if (searchInput) searchInput.value = "";
     if (priceSlider) {
-      priceSlider.value = 300;
-      maxPrice = 300;
-      if (priceValueDisplay) priceValueDisplay.textContent = "$300+";
+      priceSlider.value = 12000;
+      maxPrice = 12000;
+      if (priceValueDisplay) priceValueDisplay.textContent = "12,000 ج.م";
     }
     activeCategory = "all";
     activeAvailability = "all";

@@ -7,11 +7,12 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentStep = 1;
   const totalSteps = 4;
 
-  let setupFee = 140.00;
-  let deliveryFee = 45.00;
-  let protectionFee = 28.00;
-  let promoDiscount = 30.00;
+  let setupFee = 1200.00;
+  let deliveryFee = 350.00;
+  let protectionFee = 250.00;
+  let promoDiscount = 500.00;
   let promoApplied = true;
+  let selectedPaymentMethod = "instapay"; // instapay, vodafone_cash, card, cod
 
   // Elements
   const cartItemsContainer = document.getElementById("checkout-cart-items");
@@ -34,18 +35,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (phoneField && currentUser.phone) phoneField.value = currentUser.phone;
   }
 
-  // Initialize
-  renderCartSummary();
-  updateFinancials();
-  updateStepUI(1);
-
   // Setup Tier listener
   document.querySelectorAll("input[name='setup_tier']").forEach(radio => {
     radio.addEventListener("change", (e) => {
       if (e.target.value === "white-glove") {
-        setupFee = 140.00;
+        setupFee = 1200.00;
       } else if (e.target.value === "curbside") {
-        setupFee = 40.00;
+        setupFee = 400.00;
       } else {
         setupFee = 0.00;
       }
@@ -57,22 +53,51 @@ document.addEventListener("DOMContentLoaded", () => {
   const protCheckbox = document.getElementById("coverage-damage-checkbox");
   if (protCheckbox) {
     protCheckbox.addEventListener("change", (e) => {
-      protectionFee = e.target.checked ? 28.00 : 0.00;
+      protectionFee = e.target.checked ? 250.00 : 0.00;
       updateFinancials();
     });
   }
+
+  // Egyptian Payment Method selector cards
+  window.selectPaymentMethod = (method) => {
+    selectedPaymentMethod = method;
+    document.querySelectorAll(".payment-method-card").forEach(card => {
+      if (card.dataset.method === method) {
+        card.classList.add("selected");
+        const radio = card.querySelector("input[type='radio']");
+        if (radio) radio.checked = true;
+      } else {
+        card.classList.remove("selected");
+      }
+    });
+
+    const instapayFields = document.getElementById("payment-fields-instapay");
+    const vfCashFields = document.getElementById("payment-fields-vodafone");
+    const cardFields = document.getElementById("payment-fields-card");
+    const codFields = document.getElementById("payment-fields-cod");
+
+    if (instapayFields) instapayFields.style.display = method === "instapay" ? "block" : "none";
+    if (vfCashFields) vfCashFields.style.display = method === "vodafone_cash" ? "block" : "none";
+    if (cardFields) cardFields.style.display = method === "card" ? "block" : "none";
+    if (codFields) codFields.style.display = method === "cod" ? "block" : "none";
+  };
+
+  // Initialize
+  renderCartSummary();
+  updateFinancials();
+  updateStepUI(1);
 
   // Promo code handler
   if (promoApplyBtn && promoInput) {
     promoApplyBtn.addEventListener("click", () => {
       const code = promoInput.value.trim().toUpperCase();
-      if (code === "FIRSTEVENT" || code === "WELCOME10" || code === "GATHER2025") {
-        promoDiscount = 30.00;
+      if (code === "FIRSTEVENT" || code === "WELCOME10" || code === "GATHER2025" || code === "EGYPT") {
+        promoDiscount = 500.00;
         promoApplied = true;
-        promoMsg.innerHTML = `<span class="material-symbols-outlined text-[14px]">check</span> تم تفعيل الكود ${code}: خصم $30.00 فوري!`;
+        promoMsg.innerHTML = `<span class="material-symbols-outlined text-[14px]">check</span> تم تفعيل الكود ${code}: خصم 500 ج.م فوري!`;
         promoMsg.className = "flex items-center gap-1 text-secondary mt-1.5 text-xs font-bold";
         promoApplyBtn.textContent = "مُطبّق";
-        GatherApp.showToast("🎉 تم تطبيق كود الخصم! تم خصم $30 من المجموع.", "success");
+        GatherApp.showToast("🎉 تم تطبيق كود الخصم! تم خصم 500 ج.م من المجموع.", "success");
       } else {
         promoDiscount = 0.00;
         promoApplied = false;
@@ -115,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         </div>
         <div class="text-left shrink-0">
-          <span class="font-price-tag text-sm font-bold text-on-surface">$${((item.rate || 0) * (item.qty || 1)).toFixed(2)}</span>
+          <span class="font-price-tag text-sm font-bold text-on-surface">${((item.rate || 0) * (item.qty || 1)).toLocaleString('ar-EG')} ج.م</span>
           <p class="text-[10px] text-outline">${item.rateLabel || 'قياسي'}</p>
         </div>
       </div>
@@ -139,18 +164,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const tax = taxableAmount * 0.075; // 7.5% ضريبة الخدمات واللوجستيات
     const grandTotal = taxableAmount + tax;
 
-    if (subtotalEl) subtotalEl.textContent = `$${combinedSubtotal.toFixed(2)}`;
-    if (discountEl) discountEl.textContent = `-$${discountAmount.toFixed(2)}`;
-    if (taxEl) taxEl.textContent = `$${tax.toFixed(2)}`;
-    if (totalEl) totalEl.textContent = `$${grandTotal.toFixed(2)}`;
-    if (payBtnText) payBtnText.textContent = `$${grandTotal.toFixed(2)}`;
+    if (subtotalEl) subtotalEl.textContent = `${combinedSubtotal.toLocaleString('ar-EG')} ج.م`;
+    if (discountEl) discountEl.textContent = `-${discountAmount.toLocaleString('ar-EG')} ج.م`;
+    if (taxEl) taxEl.textContent = `${Math.round(tax).toLocaleString('ar-EG')} ج.م`;
+    if (totalEl) totalEl.textContent = `${Math.round(grandTotal).toLocaleString('ar-EG')} ج.م`;
+    if (payBtnText) payBtnText.textContent = `${Math.round(grandTotal).toLocaleString('ar-EG')} ج.م`;
 
     const setupFeeLabel = document.getElementById("summary-setup-fee");
-    if (setupFeeLabel) setupFeeLabel.textContent = `+$${setupFee.toFixed(2)}`;
+    if (setupFeeLabel) setupFeeLabel.textContent = `+${setupFee.toLocaleString('ar-EG')} ج.م`;
     const delFeeLabel = document.getElementById("summary-delivery-fee");
-    if (delFeeLabel) delFeeLabel.textContent = `+$${deliveryFee.toFixed(2)}`;
+    if (delFeeLabel) delFeeLabel.textContent = `+${deliveryFee.toLocaleString('ar-EG')} ج.م`;
     const protFeeLabel = document.getElementById("summary-protect-fee");
-    if (protFeeLabel) protFeeLabel.textContent = `+$${protectionFee.toFixed(2)}`;
+    if (protFeeLabel) protFeeLabel.textContent = `+${protectionFee.toLocaleString('ar-EG')} ج.م`;
 
     return {
       subtotal: combinedSubtotal,
@@ -213,13 +238,13 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      const name = document.getElementById("pay-name")?.value || "عميل Gather & Roam";
-      const phone = document.getElementById("pay-phone")?.value || "0501234567";
-      const email = document.getElementById("pay-email")?.value || "client@gatherroam.com";
-      const address = document.getElementById("delivery-address")?.value || "طريق الملك فهد، الرياض";
-      const city = document.getElementById("delivery-city")?.value || "الرياض";
-      const zip = document.getElementById("delivery-zip")?.value || "11564";
-      const venueType = document.getElementById("delivery-venue-type")?.value || "مزرعة أو استراحة خاصة";
+      const name = document.getElementById("pay-name")?.value || "أحمد الشناوي";
+      const phone = document.getElementById("pay-phone")?.value || "01012345678";
+      const email = document.getElementById("pay-email")?.value || "ahmed.elshennawy@gmail.com";
+      const address = document.getElementById("delivery-address")?.value || "فيلا 12، حي الربوة، الشيخ زايد";
+      const city = document.getElementById("delivery-city")?.value || "الشيخ زايد / 6 أكتوبر";
+      const zip = document.getElementById("delivery-zip")?.value || "12588";
+      const venueType = document.getElementById("delivery-venue-type")?.value || "مزرعة أو حديقة خاصة بالشيخ زايد";
       const deliveryDate = document.getElementById("step-delivery-date")?.value || "2025-06-18";
       const returnDate = document.getElementById("step-return-date")?.value || "2025-06-22";
 
@@ -242,6 +267,8 @@ document.addEventListener("DOMContentLoaded", () => {
           protectionFee,
           setupTier: setupFee > 0 ? "تركيب وفك شامل White-Glove" : "تسليم على الرصيف"
         },
+        paymentMethod: selectedPaymentMethod,
+        currency: "EGP",
         financials: financials,
         totalAmount: financials.total,
         paymentStatus: "paid_secured"
@@ -309,9 +336,9 @@ document.addEventListener("DOMContentLoaded", () => {
             <span style="color: #717973; font-size: 12px; font-weight: bold;">المعدات المحجوزة:</span>
             <ul style="list-style: none; padding: 0; margin: 8px 0; font-size: 13px;">
               ${order.items.map(it => `
-                <li style="display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px dashed rgba(113,121,115,0.1);">
+                <li style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed rgba(113,121,115,0.15);">
                   <span>${it.name} (×${it.qty || 1})</span>
-                  <strong class="font-mono">$${((it.rate || 0) * (it.qty || 1)).toFixed(2)}</strong>
+                  <strong class="font-mono text-primary">${((it.rate || 0) * (it.qty || 1)).toLocaleString('ar-EG')} ج.م</strong>
                 </li>
               `).join('')}
             </ul>
@@ -320,7 +347,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(113,121,115,0.15);">
             <div>
               <span style="font-size: 12px; color: #717973;">إجمالي المبلغ المسجل في Firebase:</span>
-              <p style="font-size: 24px; font-weight: 800; color: #012d1d; margin: 0;" class="font-mono">$${order.financials.total.toFixed(2)}</p>
+              <p style="font-size: 24px; font-weight: 800; color: #012d1d; margin: 0;" class="font-mono">${Math.round(order.financials.total).toLocaleString('ar-EG')} ج.م</p>
             </div>
             <div style="display: flex; gap: 8px;">
               <button type="button" onclick="window.print()" style="padding: 10px 16px; border-radius: 10px; border: 1px solid #c1c8c2; background: transparent; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px;">

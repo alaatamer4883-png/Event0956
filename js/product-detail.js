@@ -8,10 +8,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const product = (window.GATHER_PRODUCTS || []).find(p => p.id === productId) || window.GATHER_PRODUCTS[0];
 
-  let fulfillmentFee = 35.00;
+  let fulfillmentFee = 350.00;
   let activeDurationMode = "weekend"; // "day", "weekend", "week"
-  let baseRate = product.weekendRate || 198.00;
-  const promoDiscount = 20.00;
+  let baseRate = product.weekendRate || 4200.00;
+  const promoDiscount = 500.00;
 
   initProductUI(product);
 
@@ -32,7 +32,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const ratingEl = document.getElementById("p-rating");
     if (ratingEl) ratingEl.textContent = p.rating;
     const reviewsEl = document.getElementById("p-reviews-count");
-    if (reviewsEl) reviewsEl.textContent = `(${p.reviewsCount} تقييم موثق لفعاليات حقيقية)`;
+    if (reviewsEl) reviewsEl.textContent = `(${p.reviewsCount} تقييم موثق لفعاليات حقيقية بمصر)`;
+
+    // Update dynamic duration buttons rates
+    const rateDayEl = document.getElementById("p-rate-day");
+    if (rateDayEl) rateDayEl.innerHTML = `${(p.dailyRate || 1800).toLocaleString('ar-EG')} <span class="text-[10px] font-normal">ج.م/يوم</span>`;
+    const rateWeekendEl = document.getElementById("p-rate-weekend");
+    if (rateWeekendEl) rateWeekendEl.textContent = `${(p.weekendRate || 4200).toLocaleString('ar-EG')} ج.م`;
+    const rateWeekEl = document.getElementById("p-rate-week");
+    if (rateWeekEl) rateWeekEl.textContent = `${(p.weeklyRate || 8500).toLocaleString('ar-EG')} ج.م`;
 
     if (p.gallery && p.gallery.length > 0) {
       const heroImg = document.getElementById("main-hero-image");
@@ -53,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    baseRate = p.weekendRate || 198;
+    baseRate = p.weekendRate || 4200;
     updateSummary();
   }
 
@@ -114,12 +122,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const addonHeater = document.getElementById("addon-heater");
     const addonWaiver = document.getElementById("addon-waiver");
 
-    if (addonMattress && addonMattress.checked) addonsTotal += 35;
-    if (addonSetup && addonSetup.checked) addonsTotal += 60;
-    if (addonLights && addonLights.checked) addonsTotal += 15;
-    if (addonHeater && addonHeater.checked) addonsTotal += 25;
+    if (addonMattress && addonMattress.checked) addonsTotal += 500;
+    if (addonSetup && addonSetup.checked) addonsTotal += 1200;
+    if (addonLights && addonLights.checked) addonsTotal += 300;
+    if (addonHeater && addonHeater.checked) addonsTotal += 450;
 
-    let waiverTotal = (addonWaiver && addonWaiver.checked) ? 18 : 0;
+    let waiverTotal = (addonWaiver && addonWaiver.checked) ? 250 : 0;
 
     const summaryBase = document.getElementById("summary-base");
     const summaryShipping = document.getElementById("summary-shipping");
@@ -127,13 +135,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const summaryWaiver = document.getElementById("summary-waiver");
     const summaryTotal = document.getElementById("summary-total");
 
-    if (summaryBase) summaryBase.textContent = `$${baseRate.toFixed(2)}`;
-    if (summaryShipping) summaryShipping.textContent = `$${fulfillmentFee.toFixed(2)}`;
-    if (summaryAddons) summaryAddons.textContent = `$${addonsTotal.toFixed(2)}`;
-    if (summaryWaiver) summaryWaiver.textContent = `$${waiverTotal.toFixed(2)}`;
+    if (summaryBase) summaryBase.textContent = `${baseRate.toLocaleString('ar-EG')} ج.م`;
+    if (summaryShipping) summaryShipping.textContent = `${fulfillmentFee.toLocaleString('ar-EG')} ج.م`;
+    if (summaryAddons) summaryAddons.textContent = `${addonsTotal.toLocaleString('ar-EG')} ج.م`;
+    if (summaryWaiver) summaryWaiver.textContent = `${waiverTotal.toLocaleString('ar-EG')} ج.م`;
 
     const grandTotal = Math.max(0, (baseRate + fulfillmentFee + addonsTotal + waiverTotal) - promoDiscount);
-    if (summaryTotal) summaryTotal.textContent = `$${grandTotal.toFixed(2)}`;
+    if (summaryTotal) summaryTotal.textContent = `${grandTotal.toLocaleString('ar-EG')} ج.م`;
 
     const startDateInput = document.getElementById("date-start");
     const endDateInput = document.getElementById("date-end");
@@ -168,17 +176,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function buildConfiguredCartItem() {
     const selectedAddons = [];
-    if (document.getElementById("addon-mattress")?.checked) selectedAddons.push("طقم أسرّة ومفارش (+$35)");
-    if (document.getElementById("addon-setup")?.checked) selectedAddons.push("تركيب وفك احترافي (+$60)");
-    if (document.getElementById("addon-lights")?.checked) selectedAddons.push("إضاءة دافئة (+$15)");
-    if (document.getElementById("addon-heater")?.checked) selectedAddons.push("مدفأة تخييم (+$25)");
-    if (document.getElementById("addon-waiver")?.checked) selectedAddons.push("وثيقة حماية من التلف (+$18)");
+    if (document.getElementById("addon-mattress")?.checked) selectedAddons.push("طقم أسرّة ومفارش (+500 ج.م)");
+    if (document.getElementById("addon-setup")?.checked) selectedAddons.push("تركيب وفك احترافي (+1,200 ج.م)");
+    if (document.getElementById("addon-lights")?.checked) selectedAddons.push("إضاءة دافئة (+300 ج.م)");
+    if (document.getElementById("addon-heater")?.checked) selectedAddons.push("مدفأة تخييم (+450 ج.م)");
+    if (document.getElementById("addon-waiver")?.checked) selectedAddons.push("وثيقة حماية من التلف (+250 ج.م)");
 
     return {
       id: product.id,
       name: product.name,
       rate: baseRate,
-      rateLabel: activeDurationMode === "day" ? "$/يوم" : (activeDurationMode === "week" ? "$/أسبوع" : "$/باقة نهاية الأسبوع"),
+      rateLabel: `${baseRate.toLocaleString('ar-EG')} ج.م / ${activeDurationMode === "day" ? "يوم" : (activeDurationMode === "week" ? "أسبوع" : "باقة نهاية الأسبوع")}`,
       days: activeDurationMode === "day" ? 1 : (activeDurationMode === "week" ? 7 : 3),
       qty: 1,
       image: product.image,

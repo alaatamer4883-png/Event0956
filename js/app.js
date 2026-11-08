@@ -78,7 +78,11 @@ const GatherApp = {
     });
   },
 
-  // 2. Cart Management
+  // 2. Cart Management & Egyptian Currency Helpers
+  formatEGP(amount) {
+    return Number(amount || 0).toLocaleString('ar-EG') + " ج.م";
+  },
+
   getCart() {
     try {
       const stored = localStorage.getItem("gather_cart");
@@ -90,8 +94,8 @@ const GatherApp = {
       {
         id: "timberline-bell-tent",
         name: "خيمة تيمبرلاين بيل الفاخرة (قطر 5 أمتار)",
-        rate: 195.00,
-        rateLabel: "$195 / باقة عطلة الأسبوع",
+        rate: 4200.00,
+        rateLabel: "4,200 ج.م / باقة عطلة الأسبوع",
         days: 3,
         qty: 1,
         image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCK0EqpVG-Rcs0rslocyrvaxIF5vTJyp0SqtY-SsNO3T1DiThf5C21WFCEGEYeTfw1OgJPTXVxl_Ff72BBDlSMwVZ25i8U9VPQcvLrU97xoYTxKqNHZDbzJGjeXeNfBtQjnrjuY5091nscaamGIaMwZfq3oURD_iCZ5iY29ogH7ggiYWH4Nf2UGMAHRSK99ssQwQyYGW1khSEHE8YbHo6HWD6HseJ-LxDWA5b1GPwqd",
@@ -100,8 +104,8 @@ const GatherApp = {
       {
         id: "pro-sound-system",
         name: "نظام صوتي احترافي مع مايكات لاسلكية",
-        rate: 150.00,
-        rateLabel: "$50 / اليوم",
+        rate: 1400.00,
+        rateLabel: "1,400 ج.م / اليوم",
         days: 3,
         qty: 1,
         image: "https://lh3.googleusercontent.com/aida-public/AB6AXuD2LpaU5HDST65_i-L_0GfoWgO2yN_5tJDfaiFWWGyT29Gh5TU8gqSbDWYtlkRNLX6G4oE-OwFKJBKdnxLHIyBUIdKjxKyGBWq6y0O5fr4273w07Xf3oHlCPZeT30LAjWudR0YSexJW-iIM14Nogeyhh3OXFm0Qah7L6sAtA_T9ddEmbLMfdnvYn1xDjBTa46rjpwDL3ZQ0HWNa3dqkAgoF4VEe1_dCQCh0w-HcOb4c",
@@ -110,8 +114,8 @@ const GatherApp = {
       {
         id: "edison-festoon-lights",
         name: "حبال إضاءة إديسون الدافئة الكلاسيكية (90 متراً)",
-        rate: 76.00,
-        rateLabel: "طقم كامل",
+        rate: 750.00,
+        rateLabel: "750 ج.م / طقم كامل",
         days: 3,
         qty: 1,
         image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBqjbyNrVfFIVImo-Z_ADvd_LJrnZbEkka78X-bxx3tADYwDJyNy628jrvTQeWj5d1FSamZhD6Z3azmi2CK5DQiWesv9Q-Ws4rmVkPTgDkottLTDs1LOUC6CjxCz0mOEmFvi2Ck9bsh9bmQheGgRvzjf1PR_-HWEkmB-LogjRAvFI4LMpf3Pikg-sWqPjwAFU9xzg8kx2LLp70mhbb7QGU4U9kPPxa55_6doHb1Fn_R",
@@ -135,14 +139,15 @@ const GatherApp = {
   addToCart(item) {
     const cart = this.getCart();
     const existingIndex = cart.findIndex(c => c.id === item.id);
+    const itemRate = Number(item.rate || item.weekendRate || item.dailyRate || 1800);
     if (existingIndex > -1) {
       cart[existingIndex].qty += (item.qty || 1);
     } else {
       cart.push({
         id: item.id,
         name: item.name,
-        rate: Number(item.rate || item.weekendRate || item.dailyRate || 89),
-        rateLabel: item.rateLabel || `$${item.rate || item.weekendRate} / باقة`,
+        rate: itemRate,
+        rateLabel: item.rateLabel || `${itemRate.toLocaleString('ar-EG')} ج.م / باقة`,
         days: item.days || 3,
         qty: item.qty || 1,
         image: item.image,
@@ -333,12 +338,12 @@ const GatherApp = {
         <form id="support-advisor-form" style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;" onsubmit="GatherApp.handleSupportSubmit(event)">
           <div>
             <label style="display: block; font-size: 12px; font-weight: 700; color: #414844; margin-bottom: 4px;">الاسم الكامل</label>
-            <input type="text" id="supp-name" required value="${user ? user.name : ''}" placeholder="مثال: عبدالله الشمري" style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid #c1c8c2; background: transparent; font-size: 14px;" />
+            <input type="text" id="supp-name" required value="${user ? user.name : ''}" placeholder="مثال: أحمد محمود" style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid #c1c8c2; background: transparent; font-size: 14px;" />
           </div>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
             <div>
               <label style="display: block; font-size: 12px; font-weight: 700; color: #414844; margin-bottom: 4px;">رقم الجوال للتواصل</label>
-              <input type="tel" id="supp-phone" required value="${user ? user.phone : ''}" placeholder="05XXXXXXXX" style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid #c1c8c2; background: transparent; font-size: 14px; direction: ltr; text-align: right;" />
+              <input type="tel" id="supp-phone" required value="${user ? user.phone : ''}" placeholder="01XXXXXXXXX (مثال: 01012345678)" style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid #c1c8c2; background: transparent; font-size: 14px; direction: ltr; text-align: right;" />
             </div>
             <div>
               <label style="display: block; font-size: 12px; font-weight: 700; color: #414844; margin-bottom: 4px;">تاريخ الفعالية أو الرحلة</label>
@@ -487,11 +492,13 @@ const GatherApp = {
 window.GatherApp = GatherApp;
 window.switchMode = (mode) => GatherApp.setMode(mode);
 window.quickReserve = (name, price) => {
+  const numericPrice = typeof price === "number" ? price : parseFloat(String(price).replace(/[^0-9.]/g, "")) || 0;
   GatherApp.addToCart({
-    id: "bundle-" + name.toLowerCase().replace(/[^a-z0-9]/g, "-"),
+    id: "bundle-" + encodeURIComponent(name).replace(/[^a-zA-Z0-9]/g, "-").slice(0, 30),
     name: name,
-    rate: parseFloat(price.replace(/[^0-9.]/g, "")),
-    options: "باقة متكاملة جاهزة للتسليم"
+    rate: numericPrice,
+    rateLabel: `${numericPrice.toLocaleString('ar-EG')} ج.م / باقة كاملة`,
+    options: "باقة متكاملة جاهزة للشحن والتركيب"
   });
   window.location.href = "checkout.html";
 };

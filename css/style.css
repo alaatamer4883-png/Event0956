@@ -285,3 +285,207 @@ html.dark .mode-pill-active {
 .clickable-card:hover {
   transform: translateY(-3px);
 }
+
+/* ==========================================================================
+   Luxury Aesthetics & Distinctive Visual Polish (المظهر الفاخر والمميز)
+   ========================================================================== */
+
+/* Shimmer animation for badges and highlights */
+@keyframes shimmerAnim {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.badge-shimmer {
+  background: linear-gradient(90deg, #b45309 0%, #f59e0b 50%, #b45309 100%);
+  background-size: 200% 100%;
+  animation: shimmerAnim 3.5s infinite linear;
+  color: #ffffff !important;
+  font-weight: 800;
+  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.35);
+}
+
+.badge-emerald {
+  background: linear-gradient(135deg, #012d1d 0%, #064e3b 100%);
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(1, 45, 29, 0.25);
+}
+
+/* Distinctive Egyptian Pound Tag */
+.price-egp-container {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.price-egp-amount {
+  font-family: 'Cairo', 'Epilogue', sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+}
+
+.price-egp-currency {
+  font-size: 0.85em;
+  font-weight: 800;
+  color: #a13e28;
+  display: inline-block;
+  padding: 1px 6px;
+  background: rgba(161, 62, 40, 0.08);
+  border-radius: 6px;
+  border: 1px solid rgba(161, 62, 40, 0.15);
+}
+
+html.dark .price-egp-currency {
+  color: #fd8367;
+  background: rgba(253, 131, 103, 0.12);
+  border-color: rgba(253, 131, 103, 0.25);
+}
+
+/* Luxury Gradient Hero and Featured Cards */
+.luxury-card {
+  background: #ffffff;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(1, 45, 29, 0.08);
+  box-shadow: 0 10px 30px -5px rgba(1, 45, 29, 0.05), 0 4px 10px -2px rgba(1, 45, 29, 0.03);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.luxury-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -10px rgba(1, 45, 29, 0.12), 0 8px 16px -4px rgba(1, 45, 29, 0.06);
+  border-color: rgba(217, 119, 6, 0.3);
+}
+
+html.dark .luxury-card {
+  background: #18221d;
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.4);
+}
+
+html.dark .luxury-card:hover {
+  border-color: rgba(245, 158, 11, 0.4);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6);
+}
+
+/* VIP Bundle Featured Card Ribbon */
+.vip-ribbon {
+  background: linear-gradient(135deg, #b45309 0%, #d97706 100%);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 14px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  box-shadow: 0 4px 12px rgba(180, 83, 9, 0.3);
+}
+
+/* Egyptian Payment Gateway Selector Cards */
+.payment-selector-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
+}
+
+.payment-method-card {
+  cursor: pointer;
+  border: 2px solid rgba(113, 121, 115, 0.2);
+  border-radius: 14px;
+  padding: 12px 10px;
+  text-align: center;
+  transition: all 0.2s ease;
+  background: var(--surface-container-lowest);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+}
+
+.payment-method-card:hover {
+  border-color: #012d1d;
+  transform: translateY(-2px);
+}
+
+.payment-method-card.selected {
+  border-color: #012d1d;
+  background: rgba(1, 45, 29, 0.04);
+  box-shadow: 0 4px 16px rgba(1, 45, 29, 0.12);
+}
+
+html.dark .payment-method-card.selected {
+  border-color: #52b788;
+  background: rgba(82, 183, 136, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.payment-method-card .method-radio {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+/* Egyptian guarantee badge */
+.trust-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 700;
+  background: rgba(1, 45, 29, 0.05);
+  color: #012d1d;
+  border: 1px solid rgba(1, 45, 29, 0.1);
+}
+
+html.dark .trust-pill {
+  background: rgba(82, 183, 136, 0.1);
+  color: #74c69d;
+  border-color: rgba(82, 183, 136, 0.2);
+}
+
+/* Custom interactive ripple effect */
+.btn-luxury {
+  background: linear-gradient(135deg, #012d1d 0%, #064e3b 100%);
+  color: #ffffff !important;
+  font-weight: 800;
+  border-radius: 14px;
+  padding: 12px 24px;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(1, 45, 29, 0.22);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-luxury:hover {
+  background: linear-gradient(135deg, #064e3b 0%, #047857 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(1, 45, 29, 0.3);
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, #b45309 0%, #d97706 100%);
+  color: #ffffff !important;
+  font-weight: 800;
+  border-radius: 14px;
+  padding: 12px 24px;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(217, 119, 6, 0.3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-gold:hover {
+  background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(217, 119, 6, 0.4);
+}
+
