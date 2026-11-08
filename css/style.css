@@ -1,0 +1,287 @@
+/* Gather & Roam - Global Design System & Arabic RTL Stylesheet */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800&family=Epilogue:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+:root {
+  --primary: #012d1d;
+  --primary-container: #1b4332;
+  --on-primary: #ffffff;
+  --secondary: #a13e28;
+  --secondary-container: #fd8367;
+  --surface: #faf9f6;
+  --surface-container-low: #f4f3f0;
+  --surface-container: #efeeeb;
+  --surface-container-high: #e9e8e5;
+  --surface-container-lowest: #ffffff;
+  --on-surface: #1b1c1a;
+  --on-surface-variant: #414844;
+  --outline: #717973;
+}
+
+/* Dark Mode Overrides */
+html.dark {
+  --primary: #52b788;
+  --primary-container: #1b4332;
+  --on-primary: #081c15;
+  --secondary: #ff7f50;
+  --secondary-container: #a13e28;
+  --surface: #0d1310;
+  --surface-container-low: #151d18;
+  --surface-container: #1c2621;
+  --surface-container-high: #24302a;
+  --surface-container-lowest: #18221d;
+  --on-surface: #e9ecef;
+  --on-surface-variant: #a9b5ae;
+  --outline: #5c6b63;
+}
+
+html.dark body {
+  background-color: var(--surface) !important;
+  color: var(--on-surface) !important;
+}
+
+html.dark header {
+  background-color: rgba(13, 19, 16, 0.92) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+html.dark .bg-surface {
+  background-color: var(--surface) !important;
+}
+
+html.dark .bg-surface-container-lowest {
+  background-color: var(--surface-container-lowest) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+html.dark .bg-surface-container-low {
+  background-color: var(--surface-container-low) !important;
+}
+
+html.dark .bg-surface-container {
+  background-color: var(--surface-container) !important;
+}
+
+html.dark .text-primary {
+  color: #74c69d !important;
+}
+
+html.dark .text-on-surface {
+  color: #f1f3f5 !important;
+}
+
+html.dark .text-on-surface-variant {
+  color: #95a59d !important;
+}
+
+html.dark footer {
+  background-color: #0b0f0d !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Typography for Arabic */
+body {
+  font-family: 'Cairo', 'Tajawal', sans-serif;
+  direction: rtl;
+  text-align: right;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, .font-headline-lg, .font-headline-md, .font-headline-sm, .font-display-lg {
+  font-family: 'Cairo', sans-serif;
+  font-weight: 700;
+}
+
+/* Numbers in price tags and dates */
+.font-price-tag, .font-mono {
+  font-family: 'Cairo', 'Epilogue', sans-serif;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--surface-container-low);
+}
+::-webkit-scrollbar-thumb {
+  background: #c1c8c2;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #717973;
+}
+
+/* Toast System (RTL Animation) */
+#gather-toast-container {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.gather-toast {
+  pointer-events: auto;
+  min-width: 320px;
+  max-width: 440px;
+  padding: 14px 18px;
+  border-radius: 14px;
+  background: #ffffff;
+  color: #1b1c1a;
+  box-shadow: 0 10px 30px rgba(1, 45, 29, 0.16), 0 4px 8px rgba(0,0,0,0.06);
+  border-right: 5px solid #012d1d;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 14px;
+  animation: toastSlideInRTL 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition: all 0.3s ease;
+}
+
+html.dark .gather-toast {
+  background: #18221d;
+  color: #f1f3f5;
+  border-right-color: #52b788;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.gather-toast.success {
+  border-right-color: #2e7d32;
+}
+
+.gather-toast.error {
+  border-right-color: #ba1a1a;
+}
+
+@keyframes toastSlideInRTL {
+  from {
+    transform: translateX(-110%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes toastSlideOutRTL {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+}
+
+/* Modal Overlay */
+.gather-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(1, 45, 29, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.gather-modal-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.gather-modal-card {
+  background: #ffffff;
+  border-radius: 1.25rem;
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px -12px rgba(1, 45, 29, 0.35);
+  transform: scale(0.95) translateY(10px);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  direction: rtl;
+  text-align: right;
+}
+
+html.dark .gather-modal-card {
+  background: #18221d;
+  color: #f1f3f5;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gather-modal-backdrop.active .gather-modal-card {
+  transform: scale(1) translateY(0);
+}
+
+/* Mobile Sticky Bottom Nav */
+.mobile-bottom-nav {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: rgba(250, 249, 246, 0.95);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(113, 121, 115, 0.2);
+    z-index: 45;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 0.5rem;
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.05);
+    direction: rtl;
+  }
+
+  html.dark .mobile-bottom-nav {
+    background: rgba(13, 19, 16, 0.95);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  main {
+    padding-bottom: 84px !important;
+  }
+}
+
+.mode-pill-active {
+  background-color: #ffffff !important;
+  color: #012d1d !important;
+  box-shadow: 0 2px 8px -2px rgba(27,67,50,0.15) !important;
+  font-weight: 700 !important;
+}
+
+html.dark .mode-pill-active {
+  background-color: #24302a !important;
+  color: #74c69d !important;
+}
+
+.clickable-card {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.clickable-card:hover {
+  transform: translateY(-3px);
+}

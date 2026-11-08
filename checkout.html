@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>معالج الحجز والدفع — Gather &amp; Roam لتأجير المعدات</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "background": "#faf9f6",
+            "surface": "#faf9f6",
+            "surface-container-low": "#f4f3f0",
+            "surface-container": "#efeeeb",
+            "surface-container-high": "#e9e8e5",
+            "surface-container-lowest": "#ffffff",
+            "primary": "#012d1d",
+            "primary-container": "#1b4332",
+            "on-primary": "#ffffff",
+            "secondary": "#a13e28",
+            "secondary-container": "#fd8367",
+            "on-secondary": "#ffffff",
+            "tertiary": "#052a36",
+            "on-surface": "#1b1c1a",
+            "on-surface-variant": "#414844",
+            "outline": "#717973",
+            "outline-variant": "#c1c8c2",
+            "surface-tint": "#3f6653",
+            "primary-fixed": "#c1ecd4",
+            "secondary-fixed": "#ffdad2",
+            "on-secondary-fixed": "#3d0600"
+          },
+          fontFamily: {
+            "headline-lg": ["Cairo", "sans-serif"],
+            "headline-md": ["Cairo", "sans-serif"],
+            "headline-sm": ["Cairo", "sans-serif"],
+            "display-lg": ["Cairo", "sans-serif"],
+            "body-lg": ["Cairo", "sans-serif"],
+            "body-md": ["Cairo", "sans-serif"],
+            "price-tag": ["Cairo", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Custom App CSS -->
+  <link rel="stylesheet" href="css/style.css"/>
+
+  <!-- Firebase Integration -->
+  <script type="module" src="js/firebase.js"></script>
+</head>
+
+<body class="bg-surface font-body-md text-on-surface antialiased" data-page="checkout">
+
+  <!-- Header -->
+  <header class="fixed top-0 left-0 w-full z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(27,67,50,0.06)] border-b border-outline-variant/20">
+    <div class="h-28 max-w-7xl mx-auto px-6 flex flex-col justify-between pt-3 pb-2">
+      <div class="flex items-center justify-between gap-6">
+        <!-- Logo -->
+        <div class="flex items-center gap-3 shrink-0">
+          <a class="flex items-center gap-3 group" href="index.html">
+            <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary shadow-sm group-hover:scale-105 transition-transform">
+              <span class="material-symbols-outlined text-[24px]">camping</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="font-headline-sm text-xl text-primary font-bold tracking-tight leading-none">Gather &amp; Roam</span>
+              <span class="text-[11px] text-on-surface-variant uppercase tracking-wider font-semibold mt-0.5">تجهيز الفعاليات والرحلات البرية</span>
+            </div>
+          </a>
+        </div>
+
+        <div class="hidden md:flex items-center gap-2 text-xs text-on-surface-variant font-bold">
+          <span class="material-symbols-outlined text-surface-tint text-[18px]">lock</span>
+          <span>بوابة حجز آمنة ومشفرة 256-Bit</span>
+        </div>
+
+        <!-- Controls -->
+        <div class="flex items-center gap-3 shrink-0">
+          <button onclick="GatherApp.toggleTheme()" aria-label="تبديل الوضع" class="w-10 h-10 rounded-full bg-surface-container-low hover:bg-surface-container flex items-center justify-center text-on-surface-variant transition-colors" type="button">
+            <span class="material-symbols-outlined text-[20px] theme-toggle-icon">dark_mode</span>
+          </button>
+          <a class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-secondary text-white font-bold text-xs shadow-sm" href="checkout.html">
+            <span class="material-symbols-outlined text-[18px]">shopping_bag</span>
+            <span>السلة</span>
+            <span class="cart-count-badge w-5 h-5 rounded-full bg-white text-secondary text-[11px] flex items-center justify-center font-bold">3</span>
+          </a>
+
+          <!-- User Nav Slot -->
+          <div class="user-nav-slot shrink-0"></div>
+        </div>
+      </div>
+
+      <!-- Navigation Bar -->
+      <div class="flex items-center justify-between pt-1">
+        <nav class="flex items-center gap-3 overflow-x-auto py-1">
+          <a class="px-3 py-1 text-xs font-semibold text-on-surface-variant hover:text-on-surface transition-colors" href="index.html">الرئيسية</a>
+          <a class="px-3 py-1 text-xs font-semibold text-on-surface-variant hover:text-on-surface transition-colors" href="catalog.html">استكشف المعدات</a>
+          <a class="px-3 py-1 text-xs font-bold text-on-primary bg-primary-container rounded-full transition-colors" href="checkout.html">سلة الحجز</a>
+          <a class="px-3 py-1 text-xs font-semibold text-on-surface-variant hover:text-on-surface transition-colors" href="login.html">دخول العملاء</a>
+          <button onclick="GatherApp.openSupportModal()" class="px-3 py-1 text-xs font-semibold text-on-surface-variant hover:text-on-surface transition-colors" type="button">الدعم المباشر</button>
+        </nav>
+        <div class="hidden lg:flex items-center gap-4 text-[11px] text-on-surface-variant font-medium">
+          <span class="flex items-center gap-1 text-surface-tint"><span>🛡️</span> ضمان الاسترداد والإلغاء حتى 48 ساعة</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Checkout Wizard -->
+  <main class="w-full pt-28 bg-surface min-h-[calc(100vh-112px)]">
+    <div class="flex flex-col w-full">
+
+      <!-- 4-Step Stepper Header -->
+      <section class="w-full bg-surface-container-low py-4 shadow-sm border-b border-outline-variant/15">
+        <div class="max-w-7xl mx-auto px-6">
+          <div class="flex items-center justify-between pb-3">
+            <div class="flex items-center gap-2 text-xs text-on-surface-variant">
+              <a class="hover:text-primary transition-colors flex items-center gap-1 font-bold" href="catalog.html">
+                <span class="material-symbols-outlined text-[16px] rotate-180">arrow_back</span> العودة إلى كتالوج المعدات
+              </a>
+              <span class="text-outline">/</span>
+              <span class="text-on-surface font-bold">معرف الحجز: #GR-84920</span>
+            </div>
+            <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-primary-fixed text-on-primary-fixed text-xs font-bold">
+              <span class="w-2 h-2 rounded-full bg-surface-tint animate-pulse"></span>
+              المعدات محجوزة ومثبتة لمدة 18:42 دقيقة
+            </div>
+          </div>
+
+          <!-- Stepper Component -->
+          <nav aria-label="خطوات الحجز" class="pt-1">
+            <ol class="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <!-- Step 1 -->
+              <li onclick="goToStep(1)" class="stepper-item flex flex-col gap-1.5 cursor-pointer p-2 rounded-2xl hover:bg-surface-container transition-colors">
+                <div class="flex items-center gap-2">
+                  <div class="stepper-circle w-8 h-8 rounded-full bg-primary-container text-white flex items-center justify-center text-xs font-bold shadow-sm">
+                    1
+                  </div>
+                  <div class="h-1.5 flex-1 rounded-full bg-primary-container"></div>
+                </div>
+                <div class="flex flex-col">
+                  <span class="text-[10px] uppercase tracking-wider text-surface-tint font-bold">الخطوة 01</span>
+                  <span class="text-xs text-primary font-bold line-clamp-1">فترة التأجير والضيوف</span>
+                  <span class="stepper-status text-[11px] text-on-surface-variant">18 يونيو – 22 يونيو</span>
+                </div>
+              </li>
+
+              <!-- Step 2 -->
+              <li onclick="goToStep(2)" class="stepper-item flex flex-col gap-1.5 cursor-pointer p-2 rounded-2xl hover:bg-surface-container transition-colors">
+                <div class="flex items-center gap-2">
+                  <div class="stepper-circle w-8 h-8 rounded-full bg-secondary text-white flex items-center justify-center text-xs font-bold shadow-sm">
+                    2
+                  </div>
+                  <div class="h-1.5 flex-1 rounded-full bg-secondary-fixed"></div>
+                </div>
+                <div class="flex flex-col">
+                  <span class="text-[10px] uppercase tracking-wider text-secondary font-bold">الخطوة 02</span>
+                  <span class="text-xs text-on-surface font-bold line-clamp-1">موقع الفعالية والتوصيل</span>
+                  <span class="stepper-status text-[11px] text-on-surface-variant">العنوان واللوجستيات</span>
+                </div>
+              </li>
+
+              <!-- Step 3 -->
+              <li onclick="goToStep(3)" class="stepper-item flex flex-col gap-1.5 cursor-pointer p-2 rounded-2xl hover:bg-surface-container transition-colors">
+                <div class="flex items-center gap-2">
+                  <div class="stepper-circle w-8 h-8 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center text-xs font-bold">
+                    3
+                  </div>
+                  <div class="h-1.5 flex-1 rounded-full bg-surface-container-high"></div>
+                </div>
+                <div class="flex flex-col">
+                  <span class="text-[10px] uppercase tracking-wider text-outline font-bold">الخطوة 03</span>
+                  <span class="text-xs text-on-surface-variant font-bold line-clamp-1">خدمات التركيب والفك</span>
+                  <span class="stepper-status text-[11px] text-outline">خيارات التجهيز</span>
+                </div>
+              </li>
+
+              <!-- Step 4 -->
+              <li onclick="goToStep(4)" class="stepper-item flex flex-col gap-1.5 cursor-pointer p-2 rounded-2xl hover:bg-surface-container transition-colors">
+                <div class="flex items-center gap-2">
+                  <div class="stepper-circle w-8 h-8 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center text-xs font-bold">
+                    4
+                  </div>
+                  <div class="h-1.5 flex-1 rounded-full bg-surface-container-high"></div>
+                </div>
+                <div class="flex flex-col">
+                  <span class="text-[10px] uppercase tracking-wider text-outline font-bold">الخطوة 04</span>
+                  <span class="text-xs text-on-surface-variant font-bold line-clamp-1">الدفع الآمن وتأكيد الحجز</span>
+                  <span class="stepper-status text-[11px] text-outline">المراجعة والإرسال</span>
+                </div>
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </section>
+
+      <!-- Wizard Grid -->
+      <div class="max-w-7xl mx-auto px-6 py-10 w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          <!-- LEFT COLUMN: Wizard Step Sections (7 cols) -->
+          <div class="lg:col-span-7 flex flex-col gap-6">
+
+            <!-- STEP 1: RENTAL WINDOW -->
+            <section id="step-section-1" class="wizard-step-section bg-surface-container-lowest rounded-3xl p-6 md:p-8 shadow-sm border border-outline-variant/20">
+              <div class="flex items-center justify-between pb-4 border-b border-outline-variant/15 mb-6">
+                <div class="flex items-center gap-3">
+                  <span class="w-8 h-8 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center text-xs font-bold">1</span>
+                  <div>
+                    <h2 class="font-headline-md text-xl font-bold text-primary">تواريخ الحجز ونطاق الفعالية</h2>
+                    <p class="text-xs text-on-surface-variant">تأكيد تواريخ استلام وتسليم المعدات وعدد الضيوف المتوقع.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                <div class="p-4 rounded-2xl bg-surface-container-low border border-outline-variant/20">
+                  <label class="text-[11px] uppercase tracking-wider text-outline font-bold block mb-1">
+                    <span class="material-symbols-outlined text-[16px] text-primary align-middle ml-1">calendar_today</span> تاريخ التوصيل والاستلام
+                  </label>
+                  <input id="step-delivery-date" type="date" value="2025-06-18" class="w-full bg-transparent text-sm font-bold text-on-surface focus:outline-none cursor-pointer mt-1"/>
+                  <span class="text-[11px] text-surface-tint mt-1 block">فترة التسليم المعتمدة: 8:00 ص – 11:30 ص</span>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-surface-container-low border border-outline-variant/20">
+                  <label class="text-[11px] uppercase tracking-wider text-outline font-bold block mb-1">
+                    <span class="material-symbols-outlined text-[16px] text-primary align-middle ml-1">event_available</span> تاريخ الاسترجاع وفك المعدات
+                  </label>
+                  <input id="step-return-date" type="date" value="2025-06-22" class="w-full bg-transparent text-sm font-bold text-on-surface focus:outline-none cursor-pointer mt-1"/>
+                  <span class="text-[11px] text-surface-tint mt-1 block">فترة الاسترجاع: 2:00 م – 6:00 م</span>
+                </div>
+              </div>
+
+              <div class="mb-6">
+                <label class="text-xs font-bold text-on-surface block mb-2">حجم المناسبة المتوقع</label>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  <button type="button" class="p-3 rounded-2xl border border-outline-variant/30 text-xs font-semibold text-center hover:border-primary">2–8 مغامرين</button>
+                  <button type="button" class="p-3 rounded-2xl border border-outline-variant/30 text-xs font-semibold text-center hover:border-primary">10–25 ضيفاً</button>
+                  <button type="button" class="p-3 rounded-2xl border-2 border-primary bg-primary-fixed/20 text-xs font-bold text-primary text-center">30–75 ضيفاً</button>
+                  <button type="button" class="p-3 rounded-2xl border border-outline-variant/30 text-xs font-semibold text-center hover:border-primary">80–150+ ضيفاً</button>
+                </div>
+              </div>
+
+              <div class="flex justify-end">
+                <button type="button" onclick="goToStep(2)" class="px-6 py-3.5 rounded-2xl bg-primary hover:bg-primary-container text-white font-bold text-xs flex items-center gap-2 transition-all shadow-sm">
+                  <span>المتابعة إلى موقع التوصيل</span>
+                  <span class="material-symbols-outlined text-[18px] rotate-180">arrow_forward</span>
+                </button>
+              </div>
+            </section>
+
+            <!-- STEP 2: VENUE & DROP-OFF LOGISTICS -->
+            <section id="step-section-2" class="wizard-step-section bg-surface-container-lowest rounded-3xl p-6 md:p-8 shadow-sm border border-outline-variant/20" style="display: none;">
+              <div class="flex items-center justify-between pb-4 border-b border-outline-variant/15 mb-6">
+                <div class="flex items-center gap-3">
+                  <span class="w-8 h-8 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center text-xs font-bold">2</span>
+                  <div>
+                    <h2 class="font-headline-md text-xl font-bold text-primary">موقع الفعالية واللوجستيات</h2>
+                    <p class="text-xs text-on-surface-variant">أين ترغب أن يقوم أسطولنا بتسليم وتفريغ معداتك؟</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex flex-col gap-4 mb-6">
+                <!-- Customer Name & Phone (Autofilled if logged in) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="text-xs font-bold text-on-surface block mb-1">اسم العميل المسؤول عن الاستلام</label>
+                    <input id="pay-name" type="text" value="فهد القحطاني" class="w-full p-3.5 rounded-2xl bg-surface-container-low border border-outline-variant/30 text-sm focus:outline-none focus:border-primary"/>
+                  </div>
+                  <div>
+                    <label class="text-xs font-bold text-on-surface block mb-1">رقم الجوال للتنسيق مع السائق</label>
+                    <input id="pay-phone" type="tel" value="0501234567" class="w-full p-3.5 rounded-2xl bg-surface-container-low border border-outline-variant/30 text-sm focus:outline-none focus:border-primary dir-ltr text-right"/>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="text-xs font-bold text-on-surface block mb-1">عنوان الفعالية أو الاستراحة / المخيم</label>
+                  <input id="delivery-address" type="text" value="طريق الملك فهد، مزرعة رقم 14، الرياض" class="w-full p-3.5 rounded-2xl bg-surface-container-low border border-outline-variant/30 text-sm focus:outline-none focus:border-primary"/>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="text-xs font-bold text-on-surface block mb-1">المدينة / المنطقة</label>
+                    <input id="delivery-city" type="text" value="الرياض" class="w-full p-3.5 rounded-2xl bg-surface-container-low border border-outline-variant/30 text-sm focus:outline-none focus:border-primary"/>
+                  </div>
+                  <div>
+                    <label class="text-xs font-bold text-on-surface block mb-1">الرمز البريدي</label>
+                    <input id="delivery-zip" type="text" value="11564" class="w-full p-3.5 rounded-2xl bg-surface-container-low border border-outline-variant/30 text-sm focus:outline-none focus:border-primary"/>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="text-xs font-bold text-on-surface block mb-1">طبيعة وموقع الفعالية</label>
+                  <select id="delivery-venue-type" class="w-full p-3.5 rounded-2xl bg-surface-container-low border border-outline-variant/30 text-sm focus:outline-none focus:border-primary cursor-pointer">
+                    <option>مزرعة أو استراحة خاصة في الهواء الطلق</option>
+                    <option>مخيم بري مفتوح / موقع صحراوي أو شاطئي</option>
+                    <option>حديقة منزلية خاصة</option>
+                    <option>صالة احتفالات أو فندق</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="flex justify-between items-center">
+                <button type="button" onclick="goToStep(1)" class="px-5 py-3 rounded-2xl border border-outline-variant/30 text-xs font-bold hover:bg-surface-container">
+                  الرجوع للخطوة 1
+                </button>
+                <button type="button" onclick="goToStep(3)" class="px-6 py-3.5 rounded-2xl bg-primary hover:bg-primary-container text-white font-bold text-xs flex items-center gap-2 transition-all shadow-sm">
+                  <span>المتابعة إلى خيارات التركيب</span>
+                  <span class="material-symbols-outlined text-[18px] rotate-180">arrow_forward</span>
+                </button>
+              </div>
+            </section>
+
+            <!-- STEP 3: SETUP & STRIKE -->
+            <section id="step-section-3" class="wizard-step-section bg-surface-container-lowest rounded-3xl p-6 md:p-8 shadow-sm border border-outline-variant/20" style="display: none;">
+              <div class="flex items-center justify-between pb-4 border-b border-outline-variant/15 mb-6">
+                <div class="flex items-center gap-3">
+                  <span class="w-8 h-8 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center text-xs font-bold">3</span>
+                  <div>
+                    <h2 class="font-headline-md text-xl font-bold text-primary">خيارات التركيب والفك ووثيقة الحماية</h2>
+                    <p class="text-xs text-on-surface-variant">اختر مستوى الخدمة الفنية والتأمين المناسب لراحتك.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex flex-col gap-3 mb-6">
+                <!-- Tier 1 -->
+                <label class="p-4 rounded-2xl border-2 border-primary bg-primary-fixed/20 flex items-start gap-3 cursor-pointer transition-all">
+                  <input type="radio" name="setup_tier" value="white-glove" checked class="mt-1 accent-primary"/>
+                  <div class="flex-1">
+                    <div class="flex justify-between items-center">
+                      <span class="text-sm font-bold text-primary">تركيب وفك احترافي شامل (White-Glove)</span>
+                      <span class="font-bold text-sm text-primary font-mono">+$140.00</span>
+                    </div>
+                    <p class="text-xs text-on-surface-variant mt-1 leading-relaxed">يقوم فريقنا الفني بنصب الخيام، تمديد وتجربة الصوت والإضاءة، وفك وتنظيف كل شيء بعد المناسبة.</p>
+                  </div>
+                </label>
+
+                <!-- Tier 2 -->
+                <label class="p-4 rounded-2xl border border-outline-variant/30 bg-surface-container-low flex items-start gap-3 cursor-pointer hover:border-primary transition-all">
+                  <input type="radio" name="setup_tier" value="curbside" class="mt-1 accent-primary"/>
+                  <div class="flex-1">
+                    <div class="flex justify-between items-center">
+                      <span class="text-sm font-bold text-on-surface">تسليم وتنزيل الصناديق فقط على الموقع</span>
+                      <span class="font-bold text-sm text-on-surface font-mono">+$40.00</span>
+                    </div>
+                    <p class="text-xs text-on-surface-variant mt-1 leading-relaxed">يتم إنزال الصناديق في موقعك، وتتولى أنت التركيب عبر دليل الإرشادات المرفق.</p>
+                  </div>
+                </label>
+
+                <!-- Tier 3 -->
+                <label class="p-4 rounded-2xl border border-outline-variant/30 bg-surface-container-low flex items-start gap-3 cursor-pointer hover:border-primary transition-all">
+                  <input type="radio" name="setup_tier" value="self" class="mt-1 accent-primary"/>
+                  <div class="flex-1">
+                    <div class="flex justify-between items-center">
+                      <span class="text-sm font-bold text-on-surface">استلام وتسليم ذاتي من مستودع المركز</span>
+                      <span class="font-bold text-sm text-surface-tint">مجاناً ($0)</span>
+                    </div>
+                    <p class="text-xs text-on-surface-variant mt-1 leading-relaxed">استلم المعدات بسيارتك الخاصة وأعدها لمستودعنا بالرياض مجاناً.</p>
+                  </div>
+                </label>
+              </div>
+
+              <!-- Damage Waiver Checkbox -->
+              <div class="p-4 rounded-2xl bg-surface-container-low border border-outline-variant/20 mb-6">
+                <label class="flex items-start gap-3 cursor-pointer">
+                  <input id="coverage-damage-checkbox" type="checkbox" checked class="mt-1 accent-primary"/>
+                  <div>
+                    <span class="text-xs font-bold text-on-surface block">تأمين حماية شامل من التلف الطفيف (+$28.00)</span>
+                    <p class="text-[11px] text-on-surface-variant mt-0.5 leading-relaxed">تغطية تامة للبقع العرضية، خدوش الكانفاس، وفقدان الأوتاد أو الحبال بدون أي خصم من التأمين.</p>
+                  </div>
+                </label>
+              </div>
+
+              <div class="flex justify-between items-center">
+                <button type="button" onclick="goToStep(2)" class="px-5 py-3 rounded-2xl border border-outline-variant/30 text-xs font-bold hover:bg-surface-container">
+                  الرجوع للخطوة 2
+                </button>
+                <button type="button" onclick="goToStep(4)" class="px-6 py-3.5 rounded-2xl bg-primary hover:bg-primary-container text-white font-bold text-xs flex items-center gap-2 transition-all shadow-sm">
+                  <span>المتابعة إلى بوابة الدفع</span>
+                  <span class="material-symbols-outlined text-[18px] rotate-180">arrow_forward</span>
+                </button>
+              </div>
+            </section>
+
+            <!-- STEP 4: PAYMENT -->
+            <section id="step-section-4" class="wizard-step-section bg-surface-container-lowest rounded-3xl p-6 md:p-8 shadow-sm border border-outline-variant/20" style="display: none;">
+              <div class="flex items-center justify-between pb-4 border-b border-outline-variant/15 mb-6">
+                <div class="flex items-center gap-3">
+                  <span class="w-8 h-8 rounded-full bg-secondary text-white flex items-center justify-center text-xs font-bold">4</span>
+                  <div>
+                    <h2 class="font-headline-md text-xl font-bold text-primary">بوابة الدفع الإلكتروني وتأكيد الحجز</h2>
+                    <p class="text-xs text-on-surface-variant">عمليات دفع مشفرة ومؤكدة عبر Firebase Cloud ومزودي الدفع المعتمدين.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex flex-col gap-4 mb-6">
+                <div>
+                  <label class="text-xs font-bold text-on-surface block mb-1">البريد الإلكتروني لإرسال الفاتورة الرسمية</label>
+                  <input id="pay-email" type="email" value="fahad@alqahtani.com" class="w-full p-3.5 rounded-2xl bg-surface-container-low border border-outline-variant/30 text-sm focus:outline-none focus:border-primary text-left dir-ltr"/>
+                </div>
+
+                <div>
+                  <label class="text-xs font-bold text-on-surface block mb-1">رقم بطاقة الدفع (مدى / فيزا / ماستركارد)</label>
+                  <div class="relative">
+                    <input type="text" value="•••• •••• •••• 4242" class="w-full p-3.5 pr-11 rounded-2xl bg-surface-container-low border border-outline-variant/30 text-sm font-mono focus:outline-none focus:border-primary dir-ltr text-right"/>
+                    <span class="material-symbols-outlined absolute right-3.5 top-3.5 text-outline text-[20px]">credit_card</span>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label class="text-xs font-bold text-on-surface block mb-1">تاريخ الانتهاء (MM/YY)</label>
+                    <input type="text" value="08/28" class="w-full p-3.5 rounded-2xl bg-surface-container-low border border-outline-variant/30 text-sm font-mono focus:outline-none focus:border-primary dir-ltr text-center"/>
+                  </div>
+                  <div>
+                    <label class="text-xs font-bold text-on-surface block mb-1">رمز الأمان (CVV)</label>
+                    <input type="password" value="882" class="w-full p-3.5 rounded-2xl bg-surface-container-low border border-outline-variant/30 text-sm font-mono focus:outline-none focus:border-primary dir-ltr text-center"/>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Reassurance Badges -->
+              <div class="grid grid-cols-3 gap-2 p-3 rounded-2xl bg-surface-container-low text-center text-[11px] text-on-surface-variant mb-6">
+                <div>
+                  <span class="material-symbols-outlined text-surface-tint text-[18px]">lock</span>
+                  <p class="font-bold text-on-surface">تشفير 256-Bit</p>
+                </div>
+                <div>
+                  <span class="material-symbols-outlined text-primary text-[18px]">verified</span>
+                  <p class="font-bold text-on-surface">موثق في Firebase</p>
+                </div>
+                <div>
+                  <span class="material-symbols-outlined text-secondary text-[18px]">local_police</span>
+                  <p class="font-bold text-on-surface">استرداد كامل</p>
+                </div>
+              </div>
+
+              <div class="flex justify-between items-center">
+                <button type="button" onclick="goToStep(3)" class="px-5 py-3 rounded-2xl border border-outline-variant/30 text-xs font-bold hover:bg-surface-container">
+                  الرجوع للخطوة 3
+                </button>
+                <button id="confirm-pay-btn" type="button" class="px-8 py-4 rounded-2xl bg-secondary hover:bg-secondary-container text-white font-bold text-sm flex items-center gap-2 transition-all shadow-lg hover:scale-[1.01]">
+                  <span class="material-symbols-outlined text-[20px]">lock</span>
+                  <span>تأكيد الحجز والدفع <span id="pay-button-amount" class="font-mono">$690.15</span></span>
+                </button>
+              </div>
+            </section>
+
+          </div>
+
+          <!-- RIGHT COLUMN: Order Summary (5 cols) -->
+          <div class="lg:col-span-5 lg:sticky lg:top-36 flex flex-col gap-4">
+            <div class="bg-surface-container-lowest rounded-3xl p-6 shadow-xl border border-outline-variant/30 flex flex-col gap-4">
+              
+              <div class="flex items-center justify-between pb-3 border-b border-outline-variant/15">
+                <h3 class="font-headline-sm text-lg font-bold text-primary">ملخص حجز المعدات</h3>
+                <span class="text-xs text-on-surface-variant font-bold">جاهز للتجهيز والشحن</span>
+              </div>
+
+              <!-- Dynamic Items list -->
+              <div id="checkout-cart-items" class="flex flex-col gap-2 max-h-72 overflow-y-auto pl-1">
+                <!-- Rendered dynamically via js/checkout.js -->
+              </div>
+
+              <!-- Services Breakdown -->
+              <div class="p-4 rounded-2xl bg-surface-container-low flex flex-col gap-2 text-xs">
+                <span class="text-[11px] uppercase font-bold text-on-surface-variant">الخدمات واللوجستيات المختارة</span>
+                <div class="flex justify-between text-on-surface font-semibold">
+                  <span>خدمة التركيب والفك المتخصصة</span>
+                  <span id="summary-setup-fee" class="font-bold font-mono">+$140.00</span>
+                </div>
+                <div class="flex justify-between text-on-surface font-semibold">
+                  <span>التوصيل والنقل بأسطول مجهز</span>
+                  <span id="summary-delivery-fee" class="font-bold font-mono">+$45.00</span>
+                </div>
+                <div class="flex justify-between text-on-surface font-semibold">
+                  <span>وثيقة الحماية الشاملة</span>
+                  <span id="summary-protect-fee" class="font-bold font-mono">+$28.00</span>
+                </div>
+              </div>
+
+              <!-- Promo Code -->
+              <div>
+                <div class="flex items-center gap-2">
+                  <div class="relative flex-1">
+                    <span class="material-symbols-outlined absolute right-3 top-2.5 text-secondary text-[18px]">sell</span>
+                    <input id="promo-code-input" class="w-full pr-9 pl-3 py-2.5 bg-secondary-fixed/30 text-on-secondary-fixed text-xs font-bold rounded-xl uppercase tracking-wider focus:outline-none" type="text" value="FIRSTEVENT"/>
+                  </div>
+                  <button id="promo-apply-btn" class="px-5 py-2.5 bg-secondary text-white text-xs rounded-xl font-bold hover:bg-secondary-container transition-colors shadow-sm" type="button">
+                    مُطبّق
+                  </button>
+                </div>
+                <div id="promo-status-msg" class="flex items-center gap-1 text-secondary mt-1.5 text-xs font-bold">
+                  <span class="material-symbols-outlined text-[14px]">check</span>
+                  <span>تم تفعيل الكود FIRSTEVENT: خصم $30.00 فوري!</span>
+                </div>
+              </div>
+
+              <!-- Financial Totals -->
+              <div class="pt-3 border-t border-outline-variant/15 flex flex-col gap-2 text-xs">
+                <div class="flex justify-between text-on-surface-variant">
+                  <span>مجموع المعدات والخدمات:</span>
+                  <span id="checkout-subtotal" class="font-bold text-on-surface font-mono">$672.00</span>
+                </div>
+                <div class="flex justify-between text-secondary">
+                  <span>خصم كود الترحيب (FIRSTEVENT):</span>
+                  <span id="checkout-discount" class="font-bold font-mono">-$30.00</span>
+                </div>
+                <div class="flex justify-between text-on-surface-variant">
+                  <span>ضريبة الخدمات واللوجستيات (7.5%):</span>
+                  <span id="checkout-tax" class="font-bold text-on-surface font-mono">$48.15</span>
+                </div>
+                <div class="flex items-baseline justify-between pt-3 border-t border-outline-variant/20">
+                  <div>
+                    <span class="font-headline-sm text-lg font-bold text-primary">المجموع النهائي للحجز</span>
+                    <p class="text-[11px] text-outline">سيتم تسجيل الفاتورة في Firebase</p>
+                  </div>
+                  <span id="checkout-total" class="font-price-tag text-2xl font-bold text-primary font-mono">$690.15</span>
+                </div>
+                <div class="flex items-center justify-between p-2.5 rounded-xl bg-surface-container text-xs text-primary font-bold mt-1">
+                  <span class="flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[16px]">lock_clock</span> تأمين مسترد (حجز مؤقت فقط)
+                  </span>
+                  <span class="font-mono">$150.00 (حجز بنكي فقط)</span>
+                </div>
+              </div>
+
+              <!-- Helpline Callout -->
+              <div class="p-3.5 bg-surface-container-low rounded-2xl flex items-center justify-between text-xs">
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary text-[22px]">support_agent</span>
+                  <div>
+                    <p class="font-bold text-primary">فريق التنسيق الميداني متصل</p>
+                    <p class="text-[10px] text-outline">مساعدة فورية عبر الدردشة</p>
+                  </div>
+                </div>
+                <button type="button" onclick="GatherApp.openSupportModal()" class="px-3 py-1.5 bg-surface-container-lowest rounded-xl font-bold text-primary hover:bg-surface-container text-xs">
+                  طلب مساعدة
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Floating Action Button for Live Support -->
+  <aside class="fixed bottom-6 left-6 z-40">
+    <button class="fab-support-btn flex items-center gap-2 px-5 py-3 rounded-full bg-primary text-on-primary shadow-[0_12px_24px_-6px_rgba(27,67,50,0.3)] hover:bg-primary-container transition-all hover:scale-105" type="button">
+      <span class="material-symbols-outlined text-[20px]">chat</span>
+      <span class="text-xs font-bold">استشارة المعدات</span>
+    </button>
+  </aside>
+
+  <!-- Footer -->
+  <footer class="w-full bg-surface-container-low mt-20 border-t border-outline-variant/20 py-8">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-on-surface-variant">
+      <p>© 2025 Gather &amp; Roam لتأجير معدات الفعاليات والرحلات. جميع الحقوق محفوظة.</p>
+      <span class="text-[10px] uppercase font-bold text-primary">قاعدة بيانات Firebase Firestore متصلة</span>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="data/products.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/checkout.js"></script>
+</body>
+</html>

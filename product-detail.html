@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>تفاصيل المعدات والتخصيص — Gather &amp; Roam</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "background": "#faf9f6",
+            "surface": "#faf9f6",
+            "surface-container-low": "#f4f3f0",
+            "surface-container": "#efeeeb",
+            "surface-container-high": "#e9e8e5",
+            "surface-container-lowest": "#ffffff",
+            "primary": "#012d1d",
+            "primary-container": "#1b4332",
+            "on-primary": "#ffffff",
+            "secondary": "#a13e28",
+            "secondary-container": "#fd8367",
+            "on-secondary": "#ffffff",
+            "tertiary": "#052a36",
+            "on-surface": "#1b1c1a",
+            "on-surface-variant": "#414844",
+            "outline": "#717973",
+            "outline-variant": "#c1c8c2",
+            "surface-tint": "#3f6653",
+            "primary-fixed": "#c1ecd4",
+            "secondary-fixed": "#ffdad2",
+            "on-secondary-fixed": "#3d0600"
+          },
+          fontFamily: {
+            "headline-lg": ["Cairo", "sans-serif"],
+            "headline-md": ["Cairo", "sans-serif"],
+            "headline-sm": ["Cairo", "sans-serif"],
+            "display-lg": ["Cairo", "sans-serif"],
+            "body-lg": ["Cairo", "sans-serif"],
+            "body-md": ["Cairo", "sans-serif"],
+            "price-tag": ["Cairo", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Custom App CSS -->
+  <link rel="stylesheet" href="css/style.css"/>
+
+  <!-- Firebase Integration -->
+  <script type="module" src="js/firebase.js"></script>
+</head>
+
+<body class="bg-surface font-body-md text-on-surface antialiased" data-page="product-detail">
+
+  <!-- Header -->
+  <header class="fixed top-0 left-0 w-full z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(27,67,50,0.06)] border-b border-outline-variant/20">
+    <div class="h-28 max-w-7xl mx-auto px-6 flex flex-col justify-between pt-3 pb-2">
+      <div class="flex items-center justify-between gap-6">
+        <!-- Logo -->
+        <div class="flex items-center gap-3 shrink-0">
+          <a class="flex items-center gap-3 group" href="index.html">
+            <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary shadow-sm group-hover:scale-105 transition-transform">
+              <span class="material-symbols-outlined text-[24px]">camping</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="font-headline-sm text-xl text-primary font-bold tracking-tight leading-none">Gather &amp; Roam</span>
+              <span class="text-[11px] text-on-surface-variant uppercase tracking-wider font-semibold mt-0.5">تجهيز الفعاليات والرحلات البرية</span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Mode Toggle -->
+        <div class="hidden xl:flex items-center bg-surface-container-low rounded-full p-1 shadow-[0_1px_4px_rgba(27,67,50,0.04)]">
+          <button id="mode-party" onclick="GatherApp.setMode('party')" class="mode-pill px-4 py-1.5 rounded-full bg-surface-container-lowest text-primary font-bold text-xs shadow-sm flex items-center gap-1.5 transition-all" type="button">
+            <span>🎉 فعاليات واحتفالات</span>
+          </button>
+          <button id="mode-camp" onclick="GatherApp.setMode('trip')" class="mode-pill px-4 py-1.5 rounded-full text-on-surface-variant hover:text-on-surface font-semibold text-xs transition-all flex items-center gap-1.5" type="button">
+            <span>🏕️ رحلات وتخييم</span>
+          </button>
+        </div>
+
+        <!-- Search Bar -->
+        <form action="catalog.html" method="GET" class="flex-1 max-w-lg mx-4 hidden md:block">
+          <div class="flex items-center bg-surface-container-lowest rounded-full px-4 py-1.5 shadow-[0_1px_6px_rgba(27,67,50,0.05)] text-on-surface-variant border border-outline-variant/30 focus-within:border-primary">
+            <span class="material-symbols-outlined text-outline text-[20px] ml-2">search</span>
+            <input name="q" class="bg-transparent text-sm text-on-surface flex-1 focus:outline-none placeholder:text-outline/70" placeholder="ابحث في الكتالوج..." type="text"/>
+          </div>
+        </form>
+
+        <!-- Header Actions -->
+        <div class="flex items-center gap-3 shrink-0">
+          <button onclick="GatherApp.toggleTheme()" aria-label="تبديل الوضع" class="w-10 h-10 rounded-full bg-surface-container-low hover:bg-surface-container flex items-center justify-center text-on-surface-variant transition-colors" type="button">
+            <span class="material-symbols-outlined text-[20px] theme-toggle-icon">dark_mode</span>
+          </button>
+          <button onclick="GatherApp.showToast('تمت الإضافة إلى المفضلة!', 'info')" aria-label="المفضلة" class="w-10 h-10 rounded-full bg-surface-container-low hover:bg-surface-container flex items-center justify-center text-on-surface-variant transition-colors" type="button">
+            <span class="material-symbols-outlined text-[20px]">favorite</span>
+          </button>
+          <a class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-secondary-fixed text-on-secondary-fixed hover:bg-secondary-container transition-colors shadow-sm" href="checkout.html">
+            <span class="material-symbols-outlined text-[18px]">shopping_bag</span>
+            <span class="text-xs font-bold">السلة</span>
+            <span class="cart-count-badge w-5 h-5 rounded-full bg-secondary text-white text-[11px] flex items-center justify-center font-bold">3</span>
+          </a>
+
+          <!-- User Nav Slot -->
+          <div class="user-nav-slot shrink-0"></div>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <div class="flex items-center justify-between pt-1">
+        <nav class="flex items-center gap-3 overflow-x-auto py-1">
+          <a class="px-3 py-1 text-xs font-semibold text-on-surface-variant hover:text-on-surface transition-colors" href="index.html">الرئيسية</a>
+          <a class="px-3 py-1 text-xs font-semibold text-on-surface-variant hover:text-on-surface transition-colors" href="catalog.html">استكشف المعدات</a>
+          <a class="px-3 py-1 text-xs font-semibold text-on-surface-variant hover:text-on-surface transition-colors" href="index.html#featured-bundles">الباقات الجاهزة</a>
+          <a class="px-3 py-1 text-xs font-semibold text-on-surface-variant hover:text-on-surface transition-colors" href="checkout.html">سلة الحجز</a>
+          <a class="px-3 py-1 text-xs font-semibold text-on-surface-variant hover:text-on-surface transition-colors" href="login.html">دخول العملاء</a>
+          <button onclick="GatherApp.openSupportModal()" class="px-3 py-1 text-xs font-semibold text-on-surface-variant hover:text-on-surface transition-colors" type="button">الدعم المباشر</button>
+        </nav>
+        <div class="hidden lg:flex items-center gap-4 text-[11px] text-on-surface-variant font-medium">
+          <span class="flex items-center gap-1"><span>✨</span> فحص مخبري وتعقيم كامل</span>
+          <span class="flex items-center gap-1"><span>🚚</span> توصيل في الموعد المحدد بدقة</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Product Detail View -->
+  <main class="w-full pt-28 bg-surface min-h-[calc(100vh-112px)]">
+    <div class="flex flex-col w-full">
+
+      <!-- Breadcrumbs Bar -->
+      <div class="w-full bg-surface-container-low px-6 py-3 border-b border-outline-variant/15">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+          <nav class="flex items-center gap-2 text-xs text-on-surface-variant">
+            <a class="hover:text-primary transition-colors" href="index.html">الرئيسية</a>
+            <span>/</span>
+            <a class="hover:text-primary transition-colors" href="catalog.html">الكتالوج</a>
+            <span>/</span>
+            <span id="p-breadcrumb-cat" class="text-on-surface-variant">خيام فاخرة ومظلات</span>
+            <span>/</span>
+            <span id="p-breadcrumb-name" class="text-on-surface font-bold">خيمة تيمبرلاين بيل</span>
+          </nav>
+          <div class="flex items-center gap-3">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-fixed text-on-primary-fixed text-xs font-bold">
+              <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+              مفحوصة ومعقمة مخبرياً 100%
+            </span>
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface-variant text-xs">
+              <span class="material-symbols-outlined text-[14px]">shield</span>
+              مقاومة للرياح حتى 45 ميل/ساعة
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Showcase Grid -->
+      <div class="max-w-7xl mx-auto w-full px-6 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+          
+          <!-- LEFT COLUMN: Gallery, Specs, Field Notes (7 cols) -->
+          <section class="lg:col-span-7 flex flex-col gap-8">
+            
+            <!-- Header Segment -->
+            <div class="flex flex-col gap-2">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed text-[11px] font-bold uppercase tracking-wider">
+                  معدات استكشافية ملكية
+                </span>
+                <span class="flex items-center gap-1 text-xs text-on-surface-variant font-bold">
+                  <span class="material-symbols-outlined text-secondary text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                  <strong id="p-rating" class="text-on-surface">4.9</strong>
+                  <span id="p-reviews-count">(142 تقييم موثق)</span>
+                </span>
+              </div>
+              <h1 id="p-title" class="font-headline-lg text-2xl sm:text-3xl font-extrabold text-primary leading-tight">
+                خيمة تيمبرلاين بيل الفاخرة للاستكشاف والتخييم (قطر 5 أمتار)
+              </h1>
+              <p id="p-desc" class="text-xs sm:text-sm text-on-surface-variant leading-relaxed">
+                خيمة قطنية فاخرة من نسيج كانفاس عالي الكثافة (380 GSM)، مصممة لحفلات الزفاف الخارجية، رحلات التخييم الفاخرة ومخيمات المغامرة الجبلية.
+              </p>
+            </div>
+
+            <!-- Visual Gallery Component -->
+            <div class="flex flex-col gap-3">
+              <div class="relative w-full aspect-[16/10] rounded-3xl overflow-hidden shadow-md bg-surface-container border border-outline-variant/20">
+                <img id="main-hero-image" class="w-full h-full object-cover transition-all duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCK0EqpVG-Rcs0rslocyrvaxIF5vTJyp0SqtY-SsNO3T1DiThf5C21WFCEGEYeTfw1OgJPTXVxl_Ff72BBDlSMwVZ25i8U9VPQcvLrU97xoYTxKqNHZDbzJGjeXeNfBtQjnrjuY5091nscaamGIaMwZfq3oURD_iCZ5iY29ogH7ggiYWH4Nf2UGMAHRSK99ssQwQyYGW1khSEHE8YbHo6HWD6HseJ-LxDWA5b1GPwqd" alt="صورة المنتج الرئيسية"/>
+                <div class="absolute top-4 right-4 flex gap-2">
+                  <span class="px-3 py-1 rounded-full bg-surface/90 backdrop-blur-md text-primary text-xs font-bold shadow-sm flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[14px]">landscape</span> جاهزة للمغامرة
+                  </span>
+                </div>
+                <div class="absolute bottom-4 left-4 px-3 py-1 rounded-full bg-primary/80 backdrop-blur-sm text-white text-xs flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[14px]">photo_camera</span>
+                  <span id="gallery-counter">صورة 1 من 4</span>
+                </div>
+              </div>
+
+              <!-- Thumbnails -->
+              <div class="grid grid-cols-4 gap-3" id="gallery-thumbs-row">
+                <!-- Injected dynamically -->
+              </div>
+            </div>
+
+            <!-- Field Dossier & Bento Specs -->
+            <div class="bg-surface-container-lowest p-6 sm:p-8 rounded-3xl shadow-sm border border-outline-variant/20 flex flex-col gap-5">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-6 bg-primary rounded-full"></span>
+                <h2 class="font-headline-md text-xl font-bold text-primary">تقرير المنسق الميداني</h2>
+              </div>
+              <p class="text-xs sm:text-sm text-on-surface-variant leading-relaxed">
+                تجسد خيمة تيمبرلاين جراند ذروة الإقامة الخارجية الفاخرة. تم تصميمها لتناسب صالات العرائس في الهواء الطلق، جلسات التصوير، ورحلات التخييم العائلية الراقية. يسمح نسيج كانفاس القطني الخالص للخيمة بالتنفس بصورة طبيعية خلال درجات الحرارة المرتفعة، مع الحفاظ على الدفء والأجواء المريحة ليلاً ومقاومة الرياح الشديدة بفضل نظام التثبيت الثماني المتين.
+              </p>
+
+              <!-- Bento Highlights -->
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                <div class="p-4 rounded-2xl bg-surface-container-low flex flex-col gap-1.5">
+                  <span class="material-symbols-outlined text-primary text-[24px]">air</span>
+                  <span class="text-xs font-bold text-primary">تهوية طبيعية ذكية</span>
+                  <p class="text-[11px] text-on-surface-variant">أربع فتحات تهوية أرضية مع شباك حماية ضد الحشرات لدوران الهواء المستمر.</p>
+                </div>
+                <div class="p-4 rounded-2xl bg-surface-container-low flex flex-col gap-1.5">
+                  <span class="material-symbols-outlined text-primary text-[24px]">anchor</span>
+                  <span class="text-xs font-bold text-primary">تثبيت سريع وعاصف</span>
+                  <p class="text-[11px] text-on-surface-variant">عمود مركزي فولاذي خفيف الوزن يمكن تثبيته وتجهيزه بالكامل في أقل من 25 دقيقة.</p>
+                </div>
+                <div class="p-4 rounded-2xl bg-surface-container-low flex flex-col gap-1.5">
+                  <span class="material-symbols-outlined text-primary text-[24px]">thermostat</span>
+                  <span class="text-xs font-bold text-primary">عزل وحماية حرارية</span>
+                  <p class="text-[11px] text-on-surface-variant">منفذ مخصص مقاوم للاشتعال لتركيب مداخن مدافئ الحطب المعتمدة بأمان تام.</p>
+                </div>
+              </div>
+
+              <!-- Technical Specifications Table -->
+              <div class="pt-4 border-t border-outline-variant/15">
+                <h3 class="text-xs uppercase tracking-wider font-bold text-on-surface mb-3">المواصفات الهندسية الدقيقة</h3>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
+                  <div class="p-3 rounded-xl bg-surface-container">
+                    <span class="text-outline block text-[10px] uppercase">قطر الأرضية</span>
+                    <strong class="text-on-surface">5 أمتار (16 قدماً)</strong>
+                  </div>
+                  <div class="p-3 rounded-xl bg-surface-container">
+                    <span class="text-outline block text-[10px] uppercase">ارتفاع القمة الوسطى</span>
+                    <strong class="text-on-surface">3 أمتار كاملة</strong>
+                  </div>
+                  <div class="p-3 rounded-xl bg-surface-container">
+                    <span class="text-outline block text-[10px] uppercase">كثافة النسيج</span>
+                    <strong class="text-on-surface">380 GSM كانفاس قطني</strong>
+                  </div>
+                  <div class="p-3 rounded-xl bg-surface-container">
+                    <span class="text-outline block text-[10px] uppercase">سعة النوم</span>
+                    <strong class="text-on-surface">حتى 6 أشخاص بالغين</strong>
+                  </div>
+                  <div class="p-3 rounded-xl bg-surface-container">
+                    <span class="text-outline block text-[10px] uppercase">تحمل الرياح</span>
+                    <strong class="text-on-surface">45 ميل/ساعة مستمرة</strong>
+                  </div>
+                  <div class="p-3 rounded-xl bg-surface-container">
+                    <span class="text-outline block text-[10px] uppercase">مقاومة الماء</span>
+                    <strong class="text-on-surface">3,000 مم هيدروستاتيكي</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Customer Reviews -->
+            <div class="bg-surface-container-lowest p-6 sm:p-8 rounded-3xl shadow-sm border border-outline-variant/20 flex flex-col gap-4">
+              <div class="flex items-center justify-between">
+                <h3 class="font-headline-sm text-lg font-bold text-primary">تقييمات وتجارب العملاء الموثقة</h3>
+                <span class="text-xs font-bold text-secondary">4.9 من 5.0 (142 تجربة)</span>
+              </div>
+              <div class="flex flex-col gap-3">
+                <div class="p-4 rounded-2xl bg-surface-container-low">
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="font-bold text-xs text-on-surface">سارة وفهد الخالدي — حفل استقبال مزرعة الدرعية</span>
+                    <span class="text-[10px] text-outline">منذ أسبوعين</span>
+                  </div>
+                  <div class="flex text-secondary text-xs mb-1">★★★★★</div>
+                  <p class="text-xs text-on-surface-variant leading-relaxed">"استأجرنا هذه الخيمة لجلسة العروس والضيوف في المزرعة. قام فريق Gather &amp; Roam بنصبها خلال نصف ساعة مع الإضاءة والفرش. كانت نظيفة ومعقمة للغاية وشكلها راقٍ جداً في التصوير."</p>
+                </div>
+                <div class="p-4 rounded-2xl bg-surface-container-low">
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="font-bold text-xs text-on-surface">م. طارق العتيبي — رحلة تخييم برية في العلا</span>
+                    <span class="text-[10px] text-outline">الشهر الماضي</span>
+                  </div>
+                  <div class="flex text-secondary text-xs mb-1">★★★★★</div>
+                  <p class="text-xs text-on-surface-variant leading-relaxed">"قماش الكانفاس يفرق 180 درجة عن خيام البوليستر العادية. لا يوجد أي كتمة أو رطوبة، وثباتها في الهواء ممتاز جداً. سأكرر التجربة في الموسم القادم بالتأكيد."</p>
+                </div>
+              </div>
+            </div>
+
+          </section>
+
+          <!-- RIGHT COLUMN: Rental Configurator & Booking Card (Sticky) -->
+          <aside class="lg:col-span-5 lg:sticky lg:top-36 flex flex-col gap-4">
+            <div class="bg-surface-container-lowest rounded-3xl p-6 shadow-xl border border-outline-variant/30 flex flex-col gap-5">
+              
+              <!-- 1. Duration Mode -->
+              <div>
+                <span class="text-xs uppercase tracking-wider text-on-surface-variant font-bold block mb-2">1. حدد مدة الإيجار</span>
+                <div class="grid grid-cols-3 gap-2">
+                  <button data-rental-duration="day" type="button" class="p-2.5 rounded-2xl border border-outline-variant/30 text-center hover:border-primary transition-all">
+                    <span class="block text-[11px] text-on-surface-variant">يوم واحد</span>
+                    <span class="font-bold text-sm text-primary font-mono">$89<span class="text-[10px] font-normal">/يوم</span></span>
+                  </button>
+                  <button data-rental-duration="weekend" type="button" class="p-2.5 rounded-2xl border-2 border-primary bg-primary-fixed/20 text-center font-bold transition-all shadow-sm">
+                    <span class="block text-[11px] text-secondary font-bold">عطلة (3 أيام)</span>
+                    <span class="font-bold text-sm text-primary font-mono">$195</span>
+                  </button>
+                  <button data-rental-duration="week" type="button" class="p-2.5 rounded-2xl border border-outline-variant/30 text-center hover:border-primary transition-all">
+                    <span class="block text-[11px] text-on-surface-variant">أسبوع كامل</span>
+                    <span class="font-bold text-sm text-primary font-mono">$390</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- 2. Rental Dates -->
+              <div>
+                <span class="text-xs uppercase tracking-wider text-on-surface-variant font-bold block mb-2">2. تواريخ الفعالية أو الرحلة</span>
+                <div class="grid grid-cols-2 gap-2">
+                  <div class="p-2.5 rounded-2xl bg-surface-container-low border border-outline-variant/20">
+                    <label class="text-[10px] uppercase font-bold text-outline block">تاريخ التوصيل</label>
+                    <input id="date-start" type="date" value="2025-06-18" class="w-full bg-transparent text-xs font-bold text-on-surface focus:outline-none cursor-pointer mt-0.5"/>
+                  </div>
+                  <div class="p-2.5 rounded-2xl bg-surface-container-low border border-outline-variant/20">
+                    <label class="text-[10px] uppercase font-bold text-outline block">تاريخ الاسترجاع</label>
+                    <input id="date-end" type="date" value="2025-06-22" class="w-full bg-transparent text-xs font-bold text-on-surface focus:outline-none cursor-pointer mt-0.5"/>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 3. Fulfillment Mode -->
+              <div>
+                <span class="text-xs uppercase tracking-wider text-on-surface-variant font-bold block mb-2">3. طريقة الاستلام والتوصيل</span>
+                <div class="grid grid-cols-2 gap-2">
+                  <label class="p-2.5 rounded-2xl border border-primary bg-primary-fixed/15 flex items-center gap-2 cursor-pointer">
+                    <input type="radio" name="fulfillment" checked onchange="toggleFulfillment(35)" class="accent-primary"/>
+                    <div>
+                      <span class="text-xs font-bold text-primary block">توصيل لموقع الفعالية</span>
+                      <span class="text-[10px] text-on-surface-variant">+$35 أسطول مبرد</span>
+                    </div>
+                  </label>
+                  <label class="p-2.5 rounded-2xl border border-outline-variant/30 flex items-center gap-2 cursor-pointer hover:border-primary">
+                    <input type="radio" name="fulfillment" onchange="toggleFulfillment(0)" class="accent-primary"/>
+                    <div>
+                      <span class="text-xs font-bold text-on-surface block">استلام من المركز</span>
+                      <span class="text-[10px] text-on-surface-variant">مجاناً ($0)</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <!-- 4. Add-on Services -->
+              <div>
+                <span class="text-xs uppercase tracking-wider text-on-surface-variant font-bold block mb-2">4. خدمات وإضافات اختيارية</span>
+                <div class="flex flex-col gap-2">
+                  <label class="flex items-center justify-between p-2.5 rounded-2xl bg-surface-container-low hover:bg-surface-container cursor-pointer transition-colors">
+                    <span class="flex items-center gap-2 text-xs text-on-surface font-semibold">
+                      <input id="addon-setup" type="checkbox" checked class="accent-primary"/>
+                      <span>خدمة التركيب والفك الاحترافي</span>
+                    </span>
+                    <span class="text-xs font-bold text-primary font-mono">+$60.00</span>
+                  </label>
+                  <label class="flex items-center justify-between p-2.5 rounded-2xl bg-surface-container-low hover:bg-surface-container cursor-pointer transition-colors">
+                    <span class="flex items-center gap-2 text-xs text-on-surface font-semibold">
+                      <input id="addon-mattress" type="checkbox" checked class="accent-primary"/>
+                      <span>سرير نوم ميموري فوم مع مفارش صوف</span>
+                    </span>
+                    <span class="text-xs font-bold text-primary font-mono">+$35.00</span>
+                  </label>
+                  <label class="flex items-center justify-between p-2.5 rounded-2xl bg-surface-container-low hover:bg-surface-container cursor-pointer transition-colors">
+                    <span class="flex items-center gap-2 text-xs text-on-surface font-semibold">
+                      <input id="addon-lights" type="checkbox" class="accent-primary"/>
+                      <span>إضاءة بيسترو دافئة داخلية وخارجية</span>
+                    </span>
+                    <span class="text-xs font-bold text-primary font-mono">+$15.00</span>
+                  </label>
+                  <label class="flex items-center justify-between p-2.5 rounded-2xl bg-surface-container-low hover:bg-surface-container cursor-pointer transition-colors">
+                    <span class="flex items-center gap-2 text-xs text-on-surface font-semibold">
+                      <input id="addon-heater" type="checkbox" class="accent-primary"/>
+                      <span>مدفأة تخييم آمنة مع أسطوانة غاز</span>
+                    </span>
+                    <span class="text-xs font-bold text-primary font-mono">+$25.00</span>
+                  </label>
+                  <label class="flex items-center justify-between p-2.5 rounded-2xl bg-surface-container-low hover:bg-surface-container cursor-pointer transition-colors">
+                    <span class="flex items-center gap-2 text-xs text-on-surface font-semibold">
+                      <input id="addon-waiver" type="checkbox" checked class="accent-primary"/>
+                      <span>تأمين حماية شامل من الأعطال الطفيفة</span>
+                    </span>
+                    <span class="text-xs font-bold text-surface-tint font-mono">+$18.00</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Live Financials Summary -->
+              <div class="pt-3 border-t border-outline-variant/20 flex flex-col gap-2 text-xs">
+                <div class="flex justify-between text-on-surface-variant">
+                  <span>سعر تأجير المعدة الأساسي:</span>
+                  <span id="summary-base" class="font-bold text-on-surface font-mono">$195.00</span>
+                </div>
+                <div class="flex justify-between text-on-surface-variant">
+                  <span>رسوم التوصيل واللوجستيات:</span>
+                  <span id="summary-shipping" class="font-bold text-on-surface font-mono">$35.00</span>
+                </div>
+                <div class="flex justify-between text-on-surface-variant">
+                  <span>الخدمات والإضافات المختارة:</span>
+                  <span id="summary-addons" class="font-bold text-on-surface font-mono">$95.00</span>
+                </div>
+                <div class="flex justify-between text-on-surface-variant">
+                  <span>وثيقة الحماية الشاملة:</span>
+                  <span id="summary-waiver" class="font-bold text-on-surface font-mono">$18.00</span>
+                </div>
+                <div class="flex justify-between text-secondary">
+                  <span>خصم كود الترحيب (FIRSTEVENT):</span>
+                  <span class="font-bold font-mono">-$20.00</span>
+                </div>
+
+                <!-- Total -->
+                <div class="flex items-baseline justify-between pt-3 border-t border-outline-variant/20">
+                  <div>
+                    <span class="font-headline-sm text-lg font-bold text-primary">المجموع النهائي للحجز</span>
+                    <p class="text-[11px] text-outline">حجز وتثبيت التواريخ مؤكد</p>
+                  </div>
+                  <span id="summary-total" class="font-price-tag text-2xl font-bold text-primary">$323.00</span>
+                </div>
+              </div>
+
+              <!-- Action CTAs -->
+              <div class="flex flex-col gap-2 pt-2">
+                <button id="p-reserve-cta-btn" type="button" class="w-full py-4 px-4 rounded-2xl bg-secondary hover:bg-secondary-container text-white font-bold text-sm shadow-lg flex items-center justify-center gap-2 transition-all hover:scale-[1.01]">
+                  <span class="material-symbols-outlined text-[20px]">calendar_today</span>
+                  <span id="cta-button-text">احجز المعدات للفترة من 18 يونيو إلى 22 يونيو</span>
+                </button>
+                <button id="p-add-to-cart-btn" type="button" class="w-full py-3.5 px-4 rounded-2xl bg-surface-container hover:bg-surface-container-high text-primary font-bold text-xs flex items-center justify-center gap-2 transition-colors">
+                  <span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
+                  <span>إضافة إلى سلة الحجز (متابعة التصفح)</span>
+                </button>
+              </div>
+
+              <div class="p-3 rounded-2xl bg-surface-container-low flex items-center gap-2 text-xs text-on-surface-variant">
+                <span class="material-symbols-outlined text-secondary text-[20px]">security</span>
+                <span>إلغاء مجاني مع استرداد كامل بنسبة 100% حتى 48 ساعة قبل موعد التسليم.</span>
+              </div>
+
+            </div>
+          </aside>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Floating Action Button for Live Support -->
+  <aside class="fixed bottom-6 left-6 z-40">
+    <button class="fab-support-btn flex items-center gap-2 px-5 py-3 rounded-full bg-primary text-on-primary shadow-[0_12px_24px_-6px_rgba(27,67,50,0.3)] hover:bg-primary-container transition-all hover:scale-105" type="button">
+      <span class="material-symbols-outlined text-[20px]">chat</span>
+      <span class="text-xs font-bold">استشارة المعدات</span>
+    </button>
+  </aside>
+
+  <!-- Footer -->
+  <footer class="w-full bg-surface-container-low mt-20 border-t border-outline-variant/20 py-8">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-on-surface-variant">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary text-[20px]">camping</span>
+        <span class="font-bold text-primary">Gather &amp; Roam لتأجير معدات الفعاليات والرحلات</span>
+      </div>
+      <p>© 2025 جميع الحقوق محفوظة. متصل بقاعدة بيانات Firebase.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="data/products.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/product-detail.js"></script>
+</body>
+</html>
